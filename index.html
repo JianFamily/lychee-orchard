@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>簡家荔枝園｜農遊太平～荔枝採果趣 線上報名</title>
+<meta name="description" content="台中太平簡家荔枝園採果體驗線上報名。Lychee picking at the Jian Family Lychee Orchard, Taiping, Taichung.">
+<base target="_top">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+  :root {
+    --cream: #FAF3E8; --paper: #FFFBF4; --red: #B8432F; --red-dark: #8E2F20; --red-soft: #F6E1D9;
+    --leaf: #5E7F35; --leaf-dark: #3F5A21; --leaf-soft: #E7EEDB; --ink: #3E2A1C; --muted: #7A6553;
+    --line: #E6D9C6; --gold: #C99A3B; --danger: #C0392B;
+    /* 全站（中、英、日）都用霞鶩文楷；載入失敗時退回系統字體 */
+    --serif: "LXGW WenKai TC", "Microsoft JhengHei", "PingFang TC", "Hiragino Sans", serif;
+    --sans: "LXGW WenKai TC", "Microsoft JhengHei", "PingFang TC", "Hiragino Sans", Arial, sans-serif;
+    --type: "Special Elite", "Courier New", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: var(--sans); background: var(--cream); color: var(--ink); line-height: 1.75; -webkit-text-size-adjust: 100%; }
+  img { max-width: 100%; display: block; }
+  a { color: var(--red); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+  .serif { font-family: var(--serif); }
+  .type { font-family: var(--type); letter-spacing: .02em; }
+  h2.sec { font-family: var(--serif); font-size: 24px; margin: 0 0 6px; color: var(--ink); }
+  .sec-sub { color: var(--muted); margin: 0 0 20px; font-size: 15px; }
+  section { padding: 56px 0; }
+
+  /* 語言切換 */
+  .lang { position: fixed; top: 12px; right: 12px; z-index: 50; display: flex; background: rgba(255,251,244,.94); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+  .lang button { border: 0; background: none; font: 500 13px var(--sans); color: var(--muted); padding: 5px 11px; border-radius: 999px; cursor: pointer; }
+  .lang button.on { background: var(--red); color: #fff; }
+
+  /* 照片佔位（之後換成真的照片） */
+  .ph { position: relative; overflow: hidden; background: var(--leaf-soft); color: var(--leaf-dark); display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; }
+  .ph::after { content: attr(data-label); padding: 6px 10px; border: 1.5px dashed currentColor; border-radius: 6px; background: rgba(255,255,255,.6); max-width: 80%; }
+  .ph.has-img::after { display: none; }
+  .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* 1. 主視覺 */
+  .hero { position: relative; min-height: 92vh; display: flex; align-items: flex-end; overflow: hidden; color: #fff; }
+  .hero .bg { position: absolute; inset: -8% 0 0 0; background: var(--red-dark); will-change: transform; }
+  .hero .bg.ph { color: var(--red-soft); }
+  .hero .bg.ph::after { background: rgba(0,0,0,.18); }
+  .hero .bg img { object-position: 35% 40%; }
+  .hero .bg img:not([src]) { display: none; }
+  .hero .shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(35,18,8,.88) 0%, rgba(35,18,8,.6) 35%, rgba(35,18,8,0) 70%); }
+  .hero .inner { text-shadow: 0 1px 8px rgba(0,0,0,.45); }
+  .hero .inner { position: relative; padding: 0 16px 56px; max-width: 720px; margin: 0 auto; width: 100%; }
+  .hero .kicker { font-family: var(--type); font-size: 14px; opacity: .9; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(34px, 9vw, 52px); line-height: 1.2; margin: 6px 0 8px; }
+  .hero .tag { font-family: var(--serif); font-size: 18px; margin: 0 0 22px; opacity: .95; }
+  .hero .event { display: inline-block; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.45); border-radius: 999px; padding: 4px 14px; font-size: 14px; margin-bottom: 18px; }
+  .btn { display: inline-block; border: 0; border-radius: 999px; padding: 13px 28px; font: 700 17px var(--sans); cursor: pointer; text-decoration: none; }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-red:hover { background: var(--red-dark); }
+  .btn-ghost { background: transparent; color: var(--red); border: 1.5px solid var(--red); }
+  .hero .btn-red { background: #fff; color: var(--red); }
+  .scroll-cue { display: block; margin-top: 26px; font-size: 13px; opacity: .85; }
+  .scroll-cue span { display: inline-block; animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(6px); } }
+
+  /* 2. 故事開場 */
+  .intro-quote { font-family: var(--serif); font-size: 20px; line-height: 1.8; text-align: center; margin: 0 auto; max-width: 560px; }
+
+  /* 3. 明信片 */
+  .postcard { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 10px 28px rgba(62,42,28,.12); display: grid; grid-template-columns: 1fr; margin: 0 0 40px; }
+  .postcard .photo { aspect-ratio: 3 / 4; max-height: 70vh; }
+  .postcard .text { padding: 22px 20px 20px; display: flex; flex-direction: column; }
+  .postcard .gen { font-family: var(--type); color: var(--red); font-size: 14px; }
+  .postcard h3 { font-family: var(--serif); font-size: 21px; margin: 4px 0 10px; }
+  .postcard p { margin: 0 0 12px; font-size: 15.5px; }
+  .postcard .stamp { margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--line); font-family: var(--type); font-size: 13px; color: var(--muted); white-space: pre-line; line-height: 1.6; }
+  @media (min-width: 640px) {
+    .postcard { grid-template-columns: 1fr 1fr; }
+    .postcard .photo { aspect-ratio: auto; min-height: 420px; max-height: none; }
+    .postcard:nth-of-type(even) .photo { order: 2; }
+    .postcard .text { padding: 32px 28px 24px; }
+  }
+  .closing { font-family: var(--serif); text-align: center; font-size: 18px; color: var(--leaf-dark); margin: 8px auto 0; max-width: 520px; }
+
+  /* 4. 走進果園（捲動入園） */
+  .path { position: relative; padding-left: 28px; }
+  .path::before { content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; border-left: 3px dotted var(--leaf); }
+  .stop { position: relative; margin-bottom: 34px; }
+  .stop::before { content: ""; position: absolute; left: -27px; top: 6px; width: 15px; height: 15px; border-radius: 50%; background: var(--cream); border: 3px solid var(--leaf); }
+  .stop .lbl { font-family: var(--type); color: var(--leaf-dark); font-size: 14px; }
+  .stop h3 { font-family: var(--serif); margin: 2px 0 10px; font-size: 19px; }
+  .stop .ph { aspect-ratio: 16 / 10; border-radius: 10px; }
+  .stop p { color: var(--muted); font-size: 15px; margin: 10px 0 0; }
+
+  /* 5. 活動資訊卡 */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .icard { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .icard .k { font-size: 13px; color: var(--muted); }
+  .icard .v { font-family: var(--serif); font-size: 18px; margin-top: 2px; }
+  .icard .v small { display: block; font-family: var(--sans); font-size: 13px; color: var(--muted); }
+  .fraud { background: #FFF4D6; border: 1.5px solid #E5B24A; color: #7A4B00; border-radius: 10px; padding: 12px 14px; font-size: 14.5px; margin-top: 14px; }
+
+  /* 6. 交通 */
+  .tlist { display: grid; gap: 10px; margin-top: 14px; }
+  .titem { display: grid; grid-template-columns: 34px 1fr; gap: 8px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .titem .ic { font-size: 22px; line-height: 1.2; }
+  .titem b { display: block; font-family: var(--serif); }
+  .titem span { color: var(--muted); font-size: 14.5px; }
+  .todo { color: #A0522D; background: #FFF0E6; border-radius: 4px; padding: 0 4px; font-size: 13px; }
+  .map { aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); margin-top: 14px; }
+  .map iframe { width: 100%; height: 100%; border: 0; }
+
+  /* 7. Google 評價 */
+  .rating { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+  .rating .num { font-family: var(--serif); font-size: 40px; }
+  .stars { color: var(--gold); letter-spacing: 2px; font-size: 20px; }
+  .reviews { display: grid; gap: 12px; }
+  .review { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .review .who { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  /* 8. 報名表 */
+  .booking { background: var(--paper); border-top: 6px solid var(--red); }
+  .step { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin: 12px 0; }
+  .step h3 { margin: 0 0 12px; font-size: 16px; display: flex; gap: 8px; align-items: center; }
+  .step h3 .n { display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background: var(--red); color: #fff; align-items: center; justify-content: center; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+  .opt { border: 2px solid var(--line); border-radius: 12px; padding: 10px; background: #fff; font: 500 15px var(--sans); color: var(--ink); cursor: pointer; text-align: center; }
+  .opt small { display: block; color: var(--muted); margin-top: 3px; font-size: 13px; font-weight: 400; }
+  .opt.sel { border-color: var(--red); background: var(--red-soft); }
+  .opt:disabled { cursor: not-allowed; color: #B7AA9C; background: #F7F2EA; border-color: #EFE6D8; }
+  .opt:disabled small { color: #B7AA9C; }
+  .few small { color: var(--danger); font-weight: 700; }
+  .tk { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #F3EADC; }
+  .tk:last-child { border-bottom: 0; }
+  .desc { color: var(--muted); font-size: 13px; }
+  .stepper { display: flex; align-items: center; }
+  .stepper button { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--red); background: #fff; color: var(--red); font-size: 20px; cursor: pointer; }
+  .stepper button:disabled { opacity: .3; cursor: default; }
+  .stepper span { display: inline-block; width: 34px; text-align: center; font-size: 18px; }
+  label.f { display: block; margin: 12px 0 4px; font-size: 14px; }
+  input.f { width: 100%; padding: 11px 12px; font-size: 16px; border: 1px solid #D9CBB7; border-radius: 10px; background: #fff; color: var(--ink); }
+  input.f:focus { outline: 2px solid var(--red-soft); border-color: var(--red); }
+  .sum { position: sticky; bottom: 0; background: #fff; border: 1px solid var(--line); border-radius: 14px 14px 0 0; padding: 12px 16px; margin-top: 12px; box-shadow: 0 -6px 20px rgba(62,42,28,.08); }
+  .sum .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .sum .total b { color: var(--red); font-size: 22px; }
+  .sum .btn { width: 100%; margin-top: 10px; }
+  .btn:disabled { background: #D9CDBE !important; color: #fff !important; cursor: not-allowed; }
+  .msg { margin-top: 8px; color: var(--danger); font-weight: 700; font-size: 14px; }
+  .banner { padding: 10px 14px; border-radius: 10px; background: #FFF4D6; color: #7A4B00; font-weight: 700; margin-bottom: 8px; }
+  .notice { background: #fff; border-left: 5px solid var(--leaf); padding: 12px 14px; white-space: pre-line; border-radius: 0 10px 10px 0; font-size: 15px; }
+
+  /* 9. 常見問題 */
+  details { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 500; }
+  details p { margin: 10px 0 0; color: var(--muted); }
+  .faq-cat { font-family: var(--serif); font-size: 17px; color: var(--leaf-dark); margin: 22px 0 10px; }
+  .faq-cat:first-child { margin-top: 0; }
+  /* 常見問題：先只顯示綠色分類標題，點開才看到該類的問題 */
+  details.faq-group { background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 0; margin: 0; }
+  details.faq-group > summary { list-style: none; display: flex; align-items: center; gap: 8px; padding: 14px 2px;
+    font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--leaf-dark); }
+  details.faq-group > summary::-webkit-details-marker { display: none; }
+  details.faq-group > summary .n { font-size: 13px; font-weight: 400; color: var(--muted); }
+  details.faq-group > summary::after { content: '＋'; margin-left: auto; font-size: 18px; color: var(--leaf-dark); }
+  details.faq-group[open] > summary::after { content: '－'; }
+  details.faq-group > .faq-body { padding: 0 0 12px; }
+
+  footer { text-align: center; color: var(--muted); font-size: 14px; padding: 36px 16px 120px; line-height: 2; }
+
+  /* 確認視窗 */
+  .modal { position: fixed; inset: 0; background: rgba(40,25,15,.55); display: none; align-items: flex-end; justify-content: center; z-index: 60; }
+  .modal.open { display: flex; }
+  .sheet { background: var(--paper); width: 100%; max-width: 520px; border-radius: 18px 18px 0 0; padding: 20px 18px 24px; max-height: 90vh; overflow: auto; }
+  @media (min-width: 640px) { .modal { align-items: center; } .sheet { border-radius: 18px; } }
+  .sheet h3 { font-family: var(--serif); margin: 0 0 12px; font-size: 20px; }
+  .sheet table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .sheet td { padding: 8px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .sheet td:first-child { color: var(--muted); width: 32%; }
+  .sheet .acts { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; margin-top: 16px; }
+
+  /* 載入 */
+  #loading { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: var(--muted); }
+  .spin { width: 42px; height: 42px; border-radius: 50%; border: 4px solid var(--red-soft); border-top-color: var(--red); animation: sp 1s linear infinite; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+
+  /* 捲動浮現 */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .scroll-cue span, .spin { animation: none; } html { scroll-behavior: auto; } }
+
+  .preview-bar { background: #2F2A24; color: #F4E9D8; font-size: 13px; text-align: center; padding: 6px 12px; }
+  body.is-preview .lang { top: 58px; }
+</style>
+</head>
+<body>
+<div id="previewBar" class="preview-bar" style="display:none"></div>
+<div class="lang" role="group" aria-label="Language">
+  <button data-l="zh">中文</button><button data-l="en">EN</button><button data-l="ja">日本語</button>
+</div>
+
+<div id="loading"><div class="spin"></div><div data-t="loading"></div></div>
+
+<div id="app" style="display:none">
+  <!-- ===== 入口：只有一般報名會顯示；修改／取消模式會略過 ===== -->
+  <div id="intro">
+    <header class="hero">
+      <div class="bg ph has-img" id="heroBg"><img id="heroImg" alt="結實纍纍的荔枝樹" decoding="async" fetchpriority="high"></div>
+      <div class="shade"></div>
+      <div class="inner">
+        <div class="kicker">Taiping, Taichung · Three generations</div>
+        <h1 data-t="orchard"></h1>
+        <p class="tag" data-t="tagline"></p>
+        <div class="event" id="eventName"></div><br>
+        <a class="btn btn-red" href="#booking" data-t="bookNow"></a>
+        <span class="scroll-cue"><span>↓</span> <i data-t="scrollCue"></i></span>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap reveal"><p class="intro-quote" data-t="introQuote"></p></div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="wrap" id="postcards"></div>
+      <div class="wrap reveal"><p class="closing" data-t="closing"></p></div>
+    </section>
+
+    <section style="background:var(--paper)">
+      <div class="wrap">
+        <h2 class="sec reveal" data-t="walkTitle"></h2>
+        <p class="sec-sub reveal" data-t="walkSub"></p>
+        <div class="path" id="path"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="sec reveal" data-t="infoTitle"></h2>
+        <p class="sec-sub reveal" data-t="infoSub"></p>
+        <div class="cards reveal" id="infoCards"></div>
+        <div class="fraud reveal" id="fraudTop"></div>
+      </div>
+    </section>
+
+    <section style="background:var(--paper)">
+      <div class="wrap">
+        <h2 class="sec reveal" data-t="trafficTitle"></h2>
+        <p class="sec-sub reveal" id="address"></p>
+        <a class="btn btn-ghost reveal" id="navBtn" target="_blank" rel="noopener" data-t="navigate"></a>
+        <div class="map reveal" id="map"></div>
+        <div class="tlist reveal" id="traffic"></div>
+      </div>
+    </section>
+
+    <section id="reviewsSec">
+      <div class="wrap">
+        <h2 class="sec reveal" data-t="reviewsTitle"></h2>
+        <div class="rating reveal"><span class="num" id="ratingNum">–</span><span><span class="stars" id="ratingStars">★★★★★</span><br><span class="desc" id="ratingCount"></span></span></div>
+        <div class="reviews reveal" id="reviews"></div>
+        <p class="reveal" style="margin-top:14px"><a class="btn btn-ghost" id="reviewsBtn" target="_blank" rel="noopener" data-t="allReviews"></a></p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== 報名表 ===== -->
+  <section class="booking" id="booking">
+    <div class="wrap">
+      <h2 class="sec" id="formTitle" data-t="formTitle"></h2>
+      <div id="banner" class="banner" style="display:none"></div>
+      <div id="notice" class="notice" style="display:none"></div>
+      <div class="step"><h3><span class="n">1</span><span data-t="pickDate"></span></h3><div id="dates" class="grid"></div></div>
+      <div class="step"><h3><span class="n">2</span><span data-t="pickTime"></span></h3><div id="slots" class="grid"></div></div>
+      <div class="step"><h3><span class="n">3</span><span data-t="pickPeople"></span></h3><div id="tickets"></div></div>
+      <div class="step"><h3><span class="n">4</span><span data-t="contact"></span></h3>
+        <label class="f" for="name" data-t="name"></label><input class="f" id="name" autocomplete="name">
+        <label class="f" for="phone" data-t="phone"></label><input class="f" id="phone" type="tel" autocomplete="tel" inputmode="tel">
+        <label class="f" for="email" data-t="email"></label><input class="f" id="email" type="email" autocomplete="email">
+        <!-- 擋機器人：這一格真人看不到也不會填，有填的就是機器人 -->
+        <input id="hp" name="hp_note" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      </div>
+      <div class="sum">
+        <div class="row"><span class="desc" id="picked"></span><span class="total" id="total"></span></div>
+        <button id="submit" class="btn btn-red" data-t="next"></button>
+        <div id="msg" class="msg"></div>
+      </div>
+      <div id="cancelBox" class="step" style="display:none">
+        <h3 data-t="cantCome"></h3>
+        <p class="desc" data-t="cancelWarn"></p>
+        <button id="cancelBtn" class="btn btn-ghost" style="width:100%;color:var(--danger);border-color:var(--danger)" data-t="cancelThis"></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="faqSec">
+    <div class="wrap">
+      <h2 class="sec reveal" data-t="faqTitle"></h2>
+      <div id="faq"></div>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<!-- 送出前確認 -->
+<div class="modal" id="confirm" role="dialog" aria-modal="true" aria-labelledby="cfTitle">
+  <div class="sheet">
+    <h3 id="cfTitle" data-t="confirmTitle"></h3>
+    <table id="cfTable"></table>
+    <div class="fraud" id="cfFraud"></div>
+    <div class="acts">
+      <button class="btn btn-ghost" id="cfBack" data-t="back"></button>
+      <button class="btn btn-red" id="cfGo" data-t="confirmSend"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   報名頁（新版）：入口故事＋捲動入園＋活動資訊＋交通＋評價＋報名表＋常見問題
+   - 在 Apps Script 裡執行時呼叫後端；在電腦上單獨打開時用「預覽資料」
+   - 三語：中文（預設）、English、日本語
+   ===================================================================== */
+const IS_GAS = typeof google !== 'undefined' && google.script && google.script.run;
+/* 這個檔案有三種用法：
+   1. 放在 Apps Script 裡（IS_GAS）：直接呼叫後端
+   2. 放在 GitHub Pages（IS_API）：用網路連到下面這個 Apps Script 網址，由它讀寫試算表
+   3. 在自己電腦上打開：用範例資料預覽，不會真的報名（網址加 ?live=1 可改連真的後台）
+   ※ 如果 Apps Script 重新「建立新的部署」而換了網址，要把下面這行改成新網址（「管理部署 → 編輯 → 新版本」不會換網址） */
+const QS = new URLSearchParams(location.search);
+const IS_LOCAL = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+const API_URL = (IS_LOCAL && QS.get('api')) ||   // 只有在自己電腦上測試時，才能用 ?api= 換成別的後台
+  'https://script.google.com/macros/s/AKfycbxlMZ_u1zrxTAjRnjLqfiz-ybvl8Lvo6W0S8er3DpWzZbJKwPb_xm675LWXkiVt21fL/exec';
+const IS_API = !IS_GAS && (!IS_LOCAL || QS.has('live')) && !QS.has('mock');
+const T0 = Date.now();   // 打開網頁的時間；幾秒內就送出報名的多半是機器人
+
+/* ---------- 文字（三語） ---------- */
+const TXT = {
+  zh: {
+    loading: '正在走進果園…', orchard: '簡家荔枝園', tagline: '一顆荔枝，三代人的傳承', bookNow: '立即報名', scrollCue: '往下走進果園',
+    introQuote: '一顆荔枝，承載三代人的心血；\n一座果園，延續著家的故事。',
+    closing: '歡迎來到簡家荔枝園，和我們一起品嚐這份跨越三代的甜蜜！',
+    walkTitle: '走進果園', walkSub: '從入口到荔枝樹下，先帶你看看當天會走過的路。',
+    infoTitle: '活動資訊', infoSub: '出發前，先看看這幾件事。',
+    kDates: '活動日期', kFee: '費用', kPlace: '地點', kPay: '繳費方式', payCash: '現場現金繳費',
+    trafficTitle: '交通導覽', navigate: '用 Google 地圖導航',
+    tAddr: '導航關鍵字', tPark: '停車', tBus: '大眾運輸', tCheck: '報到地點',
+    reviewsTitle: '大家怎麼說', allReviews: '到 Google 地圖看全部評價', reviewsCount: '則 Google 評論',
+    formTitle: '報名', pickDate: '選擇日期', pickTime: '選擇時段', pickPeople: '選擇人數', contact: '聯絡資料',
+    name: '姓名', phone: '手機', email: 'Email（寄送報名確認信）',
+    selectDateFirst: '請先選擇日期', left: '剩 {n} 位', full: '已額滿', closed: '已截止', fullOrClosed: '已額滿／截止', notEnough: '剩 {n} 位（不足 {m} 人）',
+    maxPer: '每筆報名最多 {n} 人', noSeat: '（不佔名額）',
+    noSlot: '尚未選擇時段', noPeople: '尚未選擇人數', pickedTpl: '已選：{d} {t}', totalTpl: '合計',
+    next: '確認報名資料', saveEdit: '確認修改內容', sending: '送出中，請稍候…',
+    confirmTitle: '請確認報名資料', back: '返回修改', confirmSend: '確認送出',
+    cDate: '日期', cTime: '時段', cPeople: '人數', cFee: '費用', cName: '姓名', cPhone: '手機', cEmail: 'Email',
+    notOpen: '⏳ 報名尚未開放，目前可先查看場次', ended: '本活動報名已截止',
+    slotChanged: '您選的時段名額剛有變動，請重新選擇時段（已填資料都還在）',
+    netErr: '連線錯誤，請再按一次：', loadFail: '載入失敗，請重新整理：',
+    doneTitle: '✅ 報名成功', editDoneTitle: '✅ 修改完成', bookingNo: '報名編號',
+    mailSent: '確認信已寄到 {e}（沒收到請檢查垃圾郵件匣）', mailLater: '確認信將稍後寄出',
+    dupWarn: '提醒：此 Email 已有其他報名紀錄。若是重複送出，請用確認信中的按鈕取消多餘的報名。',
+    screenshot: '請截圖保存本頁，活動當天現場繳費。', backHome: '回到報名頁',
+    editTitle: '修改報名 {id}', cantCome: '不能參加了嗎？', cancelWarn: '取消後名額會立即釋出給其他人，無法復原。',
+    cancelThis: '取消這筆報名', cancelSure: '確定取消？再按一次確認', processing: '處理中…',
+    cancelTitle: '取消報名 {id}', cancelOnlyNote: '如需更改人數或時段，請透過官方 LINE 聯繫我們。', lockedNote: '已超過線上修改期限，目前只能取消。',
+    cancelledTitle: '已取消報名', cancelledBody: '報名編號 {id}（{d} {t}）已取消，名額已釋出。', cancelMailSent: '取消通知已寄到 {e}', cancelMailLater: '取消通知將稍後寄出', rebook: '重新報名其他場次',
+    cannotEdit: '⚠️ 無法修改', notFound: '找不到這筆報名資料，請確認連結是否完整。', alreadyCancelled: '報名 {id} 已經取消了。', tooLate: '報名 {id} 已超過線上修改期限，如需調整請聯繫官方 LINE。',
+    faqTitle: '常見問題', line: '官方 LINE', fb: 'FB 粉絲團', map: '地圖',
+    fraudPrefix: '🚨 '
+  },
+  en: {
+    loading: 'Walking into the orchard…', orchard: 'Jian Family Lychee Orchard', tagline: 'One lychee, three generations', bookNow: 'Book now', scrollCue: 'Scroll to step inside',
+    introQuote: 'One lychee carries the work of three generations;\none orchard carries a family\'s story.',
+    closing: 'Welcome to the Jian Family Lychee Orchard — come taste a sweetness three generations in the making.',
+    walkTitle: 'Step into the orchard', walkSub: 'From the gate to the lychee trees: a look at the path you\'ll take on the day.',
+    infoTitle: 'Event info', infoSub: 'A few things to know before you go.',
+    kDates: 'Dates', kFee: 'Fees', kPlace: 'Location', kPay: 'Payment', payCash: 'Cash on site',
+    trafficTitle: 'Getting here', navigate: 'Navigate with Google Maps',
+    tAddr: 'Search keyword', tPark: 'Parking', tBus: 'Public transport', tCheck: 'Check-in point',
+    reviewsTitle: 'What visitors say', allReviews: 'See all reviews on Google Maps', reviewsCount: 'Google reviews',
+    formTitle: 'Book your visit', pickDate: 'Choose a date', pickTime: 'Choose a time', pickPeople: 'How many people', contact: 'Your details',
+    name: 'Name', phone: 'Mobile', email: 'Email (for your confirmation)',
+    selectDateFirst: 'Choose a date first', left: '{n} left', full: 'Full', closed: 'Closed', fullOrClosed: 'Full / closed', notEnough: '{n} left (need {m})',
+    maxPer: 'Up to {n} people per booking', noSeat: '(no seat needed)',
+    noSlot: 'No time chosen yet', noPeople: 'No one added yet', pickedTpl: 'Chosen: {d} {t}', totalTpl: 'Total',
+    next: 'Review booking', saveEdit: 'Review changes', sending: 'Sending…',
+    confirmTitle: 'Check your booking', back: 'Go back', confirmSend: 'Confirm',
+    cDate: 'Date', cTime: 'Time', cPeople: 'People', cFee: 'Fee', cName: 'Name', cPhone: 'Mobile', cEmail: 'Email',
+    notOpen: '⏳ Booking isn\'t open yet. You can still browse the sessions.', ended: 'Booking for this event has closed.',
+    slotChanged: 'Seats for your time just changed. Choose a time again — your details are kept.',
+    netErr: 'Connection problem. Try again: ', loadFail: 'Couldn\'t load. Refresh the page: ',
+    doneTitle: '✅ You\'re booked', editDoneTitle: '✅ Changes saved', bookingNo: 'Booking no.',
+    mailSent: 'Confirmation sent to {e} (check your spam folder if it\'s not there).', mailLater: 'Your confirmation email will follow shortly.',
+    dupWarn: 'Note: this email already has another booking. If you sent this twice, cancel the extra one from your confirmation email.',
+    screenshot: 'Take a screenshot of this page. You\'ll pay in cash on the day.', backHome: 'Back to booking',
+    editTitle: 'Edit booking {id}', cantCome: 'Can\'t make it?', cancelWarn: 'Cancelling releases your seats to others right away and can\'t be undone.',
+    cancelThis: 'Cancel this booking', cancelSure: 'Tap again to confirm', processing: 'Working…',
+    cancelTitle: 'Cancel booking {id}', cancelOnlyNote: 'To change the number of people or the time, contact us on LINE.', lockedNote: 'Online changes have closed. You can still cancel.',
+    cancelledTitle: 'Booking cancelled', cancelledBody: 'Booking {id} ({d} {t}) is cancelled and the seats are released.', cancelMailSent: 'Cancellation sent to {e}', cancelMailLater: 'Your cancellation email will follow shortly.', rebook: 'Book another session',
+    cannotEdit: '⚠️ Can\'t edit', notFound: 'We couldn\'t find this booking. Check that the link is complete.', alreadyCancelled: 'Booking {id} is already cancelled.', tooLate: 'Booking {id} can no longer be changed online. Contact us on LINE.',
+    faqTitle: 'FAQ', line: 'LINE', fb: 'Facebook', map: 'Map',
+    fraudPrefix: '🚨 '
+  },
+  ja: {
+    loading: '果樹園へご案内中…', orchard: '簡家ライチ園', tagline: '一粒のライチに、三代の想い', bookNow: '予約する', scrollCue: 'スクロールして園内へ',
+    introQuote: '一粒のライチに三代の想いを、\nひとつの果樹園に家族の物語を。',
+    closing: '簡家ライチ園へようこそ。三代にわたる甘さを、一緒に味わいましょう。',
+    walkTitle: '果樹園を歩く', walkSub: '入口からライチの木の下まで、当日歩く道をご紹介します。',
+    infoTitle: 'イベント情報', infoSub: 'お出かけ前にご確認ください。',
+    kDates: '開催日', kFee: '料金', kPlace: '場所', kPay: 'お支払い', payCash: '当日現金払い',
+    trafficTitle: 'アクセス', navigate: 'Google マップでナビ',
+    tAddr: '検索キーワード', tPark: '駐車場', tBus: '公共交通機関', tCheck: '受付場所',
+    reviewsTitle: 'お客様の声', allReviews: 'Google マップですべての口コミを見る', reviewsCount: '件の Google 口コミ',
+    formTitle: 'ご予約', pickDate: '日付を選ぶ', pickTime: '時間を選ぶ', pickPeople: '人数を選ぶ', contact: 'ご連絡先',
+    name: 'お名前', phone: '携帯電話', email: 'メール（予約確認メール送付先）',
+    selectDateFirst: '先に日付を選んでください', left: '残り {n} 名', full: '満員', closed: '受付終了', fullOrClosed: '満員／受付終了', notEnough: '残り {n} 名（{m} 名に不足）',
+    maxPer: '1 件のご予約は最大 {n} 名まで', noSeat: '（定員に含まれません）',
+    noSlot: '時間が未選択です', noPeople: '人数が未選択です', pickedTpl: '選択中：{d} {t}', totalTpl: '合計',
+    next: '予約内容を確認', saveEdit: '変更内容を確認', sending: '送信中…',
+    confirmTitle: '予約内容のご確認', back: '戻って修正', confirmSend: '確定する',
+    cDate: '日付', cTime: '時間', cPeople: '人数', cFee: '料金', cName: 'お名前', cPhone: '携帯電話', cEmail: 'メール',
+    notOpen: '⏳ 予約受付前です。日程はご覧いただけます。', ended: 'このイベントの予約受付は終了しました。',
+    slotChanged: '選択した時間の空き状況が変わりました。時間を選び直してください（入力内容は残っています）。',
+    netErr: '通信エラーです。もう一度お試しください：', loadFail: '読み込めませんでした。再読み込みしてください：',
+    doneTitle: '✅ ご予約ありがとうございます', editDoneTitle: '✅ 変更しました', bookingNo: '予約番号',
+    mailSent: '確認メールを {e} に送りました（届かない場合は迷惑メールをご確認ください）。', mailLater: '確認メールはまもなく送信されます。',
+    dupWarn: 'ご注意：このメールアドレスには別のご予約があります。重複の場合は確認メールのボタンから取り消してください。',
+    screenshot: 'この画面を保存してください。お支払いは当日現金でお願いします。', backHome: '予約ページに戻る',
+    editTitle: '予約 {id} の変更', cantCome: 'ご都合が悪くなりましたか？', cancelWarn: '取り消すと枠はすぐに他の方へ開放され、元に戻せません。',
+    cancelThis: 'この予約を取り消す', cancelSure: 'もう一度押すと取り消します', processing: '処理中…',
+    cancelTitle: '予約 {id} の取り消し', cancelOnlyNote: '人数や時間の変更は、公式 LINE からご連絡ください。', lockedNote: 'オンラインでの変更期限を過ぎました。取り消しのみ可能です。',
+    cancelledTitle: '予約を取り消しました', cancelledBody: '予約番号 {id}（{d} {t}）を取り消し、枠を開放しました。', cancelMailSent: '取り消しのお知らせを {e} に送りました', cancelMailLater: '取り消しのお知らせはまもなく送信されます。', rebook: '別の日程を予約する',
+    cannotEdit: '⚠️ 変更できません', notFound: 'ご予約が見つかりません。リンクが途中で切れていないかご確認ください。', alreadyCancelled: '予約 {id} はすでに取り消されています。', tooLate: '予約 {id} はオンラインでの変更期限を過ぎました。公式 LINE からご連絡ください。',
+    faqTitle: 'よくある質問', line: '公式 LINE', fb: 'Facebook', map: '地図',
+    fraudPrefix: '🚨 '
+  }
+};
+const WEEK = { zh: '日一二三四五六', ja: '日月火水木金土', en: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'] };
+const MON_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const TICKET_NAME = { '成人': { en: 'Adult', ja: '大人' }, '兒童': { en: 'Child', ja: 'こども' } };
+const TICKET_DESC = { '3–12 歲': { en: 'Ages 3–12', ja: '3〜12 歳' }, '3-12歲': { en: 'Ages 3–12', ja: '3〜12 歳' } };
+
+/* ---------- 園區故事（三語） ---------- */
+const STORY = [
+  { gen: '01 · 第一代', genEn: '01 · First generation', genJa: '01 · 一代目', photo: '明信片：第一代（直式 3:4）',
+    zh: { h: '簡阿公種下的荔枝樹', p: ['從簡阿公那一代開始，簡家便種下了一棵棵荔枝樹。', '每逢荔枝成熟的季節，總會聘請許多採收工人，大家穿梭在果園裡，忙碌地採摘、裝箱，分享豐收的喜悅。'] },
+    en: { h: 'The trees Grandpa Jian planted', p: ['It all began with Grandpa Jian, who planted the family\'s first lychee trees.', 'Every harvest season, many pickers came to help — weaving between the trees, picking and packing, sharing the joy of a good harvest.'] },
+    ja: { h: '簡おじいさんが植えた木', p: ['簡おじいさんの代から、簡家はライチの木を一本一本植えてきました。', '実りの季節になると大勢の収穫スタッフを迎え、皆で果樹園を行き来しながら摘み取り、箱詰めし、豊作の喜びを分かち合ってきました。'] },
+    stamp: 'Taiping, Taichung\nNo. 1st generation\nlychee, harvest, family' },
+  { gen: '02 · 第二代', genEn: '02 · Second generation', genJa: '02 · 二代目', photo: '明信片：第二代（直式 3:4）',
+    zh: { h: '傳統，與越來越少的人手', p: ['到了第二代，依然延續著傳統的採收方式。', '然而，隨著時代改變，願意從事採收工作的工人越來越少，年紀也越來越大，就連辛苦一輩子的老農，也漸漸無法負荷繁重的工作。'] },
+    en: { h: 'Tradition, and fewer hands', p: ['The second generation carried on the traditional way of harvesting.', 'But times changed. Fewer people were willing to do harvest work, the pickers grew older, and even farmers who had worked all their lives could no longer manage the heavy labour.'] },
+    ja: { h: '伝統と、減っていく人手', p: ['二代目も、昔ながらの収穫方法を受け継ぎました。', 'しかし時代は変わり、収穫の仕事を担う人は年々減り、高齢化も進みました。一生懸命働いてきたベテラン農家にとっても、重労働は次第に難しくなっていきました。'] },
+    stamp: 'Taiping, Taichung\nNo. 2nd generation\ntradition, hands, time' },
+  { gen: '03 · 第三代', genEn: '03 · Third generation', genJa: '03 · 三代目', photo: '明信片：第三代・小主人插畫（直式 3:4）',
+    zh: { h: '讓更多人走進果園', p: ['於是，第三代決定為果園開啟新的可能——從傳統採收走向親子體驗，讓更多人走進果園。', '現在，簡家荔枝園不只是種植荔枝的地方，更希望邀請大家親自走進果園，親手摘下枝頭上新鮮的荔枝，感受土地的美好與採果的樂趣。'] },
+    en: { h: 'Opening the gate to everyone', p: ['So the third generation opened a new chapter: from traditional harvesting to family experiences, inviting more people into the orchard.', 'Today the orchard is more than a place where lychees grow. Come in, pick fresh lychees from the branch with your own hands, and feel the goodness of the land.'] },
+    ja: { h: 'もっと多くの人を果樹園へ', p: ['そこで三代目は、果樹園に新しい可能性を開くことにしました——伝統的な収穫から、親子で楽しむ体験へ。', 'いま簡家ライチ園は、ライチを育てるだけの場所ではありません。果樹園に足を運び、枝先の新鮮なライチを自分の手で摘み取り、大地の恵みと収穫の楽しさを感じてください。'] },
+    stamp: 'Taiping, Taichung\nNo. 2027-0606\nlychee, family, welcome' }
+];
+
+/* ---------- 走進果園（三語） ---------- */
+const PATH = [
+  { lbl: 'Stop 1', photo: '照片：果園入口（橫式）', zh: ['果園入口', '在這裡報到、領取採果袋，聽園主說明採果方式。'], en: ['The gate', 'Check in here, pick up your bag and hear how to pick from the grower.'], ja: ['果樹園の入口', 'ここで受付をして袋を受け取り、園主から摘み方の説明を聞きます。'] },
+  { lbl: 'Stop 2', photo: '照片：果樹小徑（橫式）', zh: ['果樹小徑', '沿著樹蔭小路往裡走，兩旁都是結實纍纍的荔枝樹。'], en: ['The orchard path', 'Follow the shady path between rows of laden lychee trees.'], ja: ['果樹の小道', '木陰の小道を進むと、両側に実をつけたライチの木が並びます。'] },
+  { lbl: 'Stop 3', photo: '照片：荔枝特寫（橫式）', zh: ['荔枝樹下', '挑一串紅透的荔枝，親手剪下屬於你的那一串甜。'], en: ['Under the lychee trees', 'Find a ripe red bunch and snip your own sweet harvest.'], ja: ['ライチの木の下で', '真っ赤に熟した房を選んで、自分の手で摘み取りましょう。'] }
+];
+
+/* ---------- 交通／評價／常見問題（之後改從試算表讀，三語） ---------- */
+/* 交通：常見問題表第 25–27 題 */
+const TRAFFIC = [
+  { ic: '🔎', k: 'tAddr', v: { zh: 'Google 地圖搜尋：簡家荔枝園', en: 'Search “簡家荔枝園” on Google Maps', ja: 'Google マップで「簡家荔枝園」を検索' } },
+  { ic: '🅿️', k: 'tPark', v: { zh: '無設立停車場，小客車可停在果園周邊馬路上；遊覽車可停至古農莊文物館。', en: 'There\'s no parking lot. Cars can park on the roads around the orchard; tour buses can park at the Gu Nong Zhuang Heritage Museum (古農莊文物館).', ja: '専用駐車場はありません。乗用車は果樹園周辺の道路に、観光バスは古農莊文物館に駐車できます。' } },
+  { ic: '🚌', k: 'tBus', v: { zh: '搭乘公車可至福興橋（光興路）站下車，步行上山，大約 20 分鐘。', en: 'Take the bus to the Fuxing Bridge (Guangxing Rd.) stop — 福興橋（光興路）— then walk uphill for about 20 minutes.', ja: 'バスで「福興橋（光興路）」で下車し、坂道を徒歩約 20 分です。' } }
+];
+const REVIEWS = { rating: null, count: null, items: [
+  { text: '這裡放第 1 則真實 Google 評論（照原文）', who: '評論者暱稱縮寫，例如 林○○' },
+  { text: '這裡放第 2 則真實 Google 評論（照原文）', who: '評論者暱稱縮寫' },
+  { text: '這裡放第 3 則真實 Google 評論（照原文）', who: '評論者暱稱縮寫' }
+] };
+/* 常見問題：只放「常見問題_已答覆.xlsx」有答覆的題目（交通第 25–27 題放在交通導覽） */
+const FAQ_CATS = {
+  book: { zh: '報名與名額', en: 'Booking and seats', ja: '予約・定員' },
+  fee:  { zh: '費用與付款', en: 'Fees and payment', ja: '料金・お支払い' },
+  pick: { zh: '採果規則', en: 'Picking', ja: '収穫について' },
+  wx:   { zh: '天氣與異動', en: 'Weather and changes', ja: '天候・変更' },
+  site: { zh: '現場準備', en: 'On site', ja: '当日の準備・設備' }
+};
+const FAQ = [
+  { c: 'book', q: { zh: '一定要先上網報名嗎？可以現場直接來嗎？', en: 'Do I need to book online? Can I just show up?', ja: '事前予約は必要ですか？当日直接行ってもいいですか？' },
+    a: { zh: '為控制人數，維持較好採果品質，採果以預約為主；現場報名較無法保證能順利入園採果。', en: 'To keep numbers manageable and the picking experience good, visits are by reservation. Walk-ins can\'t be guaranteed entry.', ja: '人数を管理し、より良い収穫体験を保つため、予約制が基本です。当日受付では入園できない場合があります。' } },
+  { c: 'book', q: { zh: '平日可以去嗎？團體要怎麼報名？', en: 'Can I visit on a weekday? How do groups book?', ja: '平日も参加できますか？団体はどう予約しますか？' },
+    a: { zh: '果農有其他果園須照料，平日時段 20 人以上，加入官方帳號後，協調預約時段。', en: 'Our growers tend other orchards on weekdays, so weekday visits are for groups of 20 or more. Add our official LINE account to arrange a time.', ja: '平日は他の果樹園の作業があるため、20 名以上の団体のみ受け付けています。公式 LINE を追加して日時をご相談ください。' } },
+  { c: 'book', q: { zh: '場次額滿了，還有機會嗎？會開放候補或加場嗎？', en: 'A session is full. Is there a waitlist or an extra session?', ja: '満員の回にキャンセル待ちや追加開催はありますか？' },
+    a: { zh: '可以報名其他場次，無加場。', en: 'You can book another session. We don\'t add extra sessions.', ja: '他の回をご予約ください。追加開催はありません。' } },
+  { c: 'book', q: { zh: '每個場次最多幾人？', en: 'How many people can join each session?', ja: '1 回の定員は何名ですか？' },
+    a: { zh: '每場次 40 人為上限。', en: 'Up to 40 people per session.', ja: '各回の定員は 40 名です。' } },
+  { c: 'book', q: { zh: '報名後沒收到確認信怎麼辦？', en: 'I didn\'t get a confirmation email.', ja: '予約確認メールが届きません。' },
+    a: { zh: '可以至電子信箱中垃圾郵件搜尋；或是洽詢官方 LINE。', en: 'Check your spam or junk folder, or contact us on our official LINE.', ja: '迷惑メールフォルダをご確認いただくか、公式 LINE からお問い合わせください。' } },
+  { c: 'book', q: { zh: '可以改日期、時段或人數嗎？到什麼時候前可以改？', en: 'Can I change the date, time or number of people? Until when?', ja: '日付・時間・人数は変更できますか？いつまでですか？' },
+    a: { zh: '活動前 3 天以前，都可以點選報名確認信中的「修改／取消報名」按鈕修改；活動前 3 天起，線上只能取消、無法修改。熱門時段通常較搶手，要修改要評估該場次是否還有名額。',
+         en: 'Until three days before your visit, you can make changes with the “Edit / cancel booking” button in your confirmation email. From three days before, you can only cancel online, not make changes. Popular sessions fill up fast, so a change also depends on whether the session you want still has space.',
+         ja: '活動の 3 日前までは、予約確認メールの「変更／取り消し」ボタンから変更できます。3 日前からはオンラインでの変更はできず、取り消しのみとなります。人気の回は埋まりやすいため、変更は希望の回の空き状況にもよります。' } },
+  { c: 'book', q: { zh: '不能來了要怎麼取消？會不會被收費？', en: 'How do I cancel? Is there a fee?', ja: '行けなくなったらどう取り消しますか？料金はかかりますか？' },
+    a: { zh: '活動前三天可多利用信件中取消功能；當天可以傳訊息官方 LINE 取消；活動前未收任何訂金。', en: 'In the three days before your visit, use the cancel button in your email. On the day itself, message our official LINE to cancel. No deposit is charged in advance.', ja: '活動前の 3 日間はメール内の取り消しボタンをご利用ください。当日は公式 LINE にメッセージでご連絡ください。事前の予約金はいただいていません。' } },
+  { c: 'fee', q: { zh: '費用包含哪些？可以帶回多少荔枝？', en: 'What does the fee include? How many lychees can I take home?', ja: '料金には何が含まれますか？どれくらい持ち帰れますか？' },
+    a: { zh: '成人 200 元可帶回 2 斤、3–12 歲 100 元可帶回 1 斤（暫定）。若有變化，以報名系統及現場說明為主。', en: 'Adults (NT$200) take home 2 catties (about 1.2 kg); ages 3–12 (NT$100) take home 1 catty (about 600 g). These amounts are provisional — the booking page and on-site notice take precedence if anything changes.', ja: '大人 200 元で 2 斤（約 1.2 kg）、3〜12 歳 100 元で 1 斤（約 600 g）をお持ち帰りいただけます（暫定）。変更がある場合は、予約ページと当日の案内が優先されます。' } },
+  { c: 'fee', q: { zh: '3 歲以下要收費嗎？可以一起採嗎？', en: 'Do children under 3 pay? Can they pick too?', ja: '3 歳未満は料金がかかりますか？一緒に摘めますか？' },
+    a: { zh: '3 歲以下不收費，可以由成年人帶進場。', en: 'Children under 3 are free and can come in with an adult.', ja: '3 歳未満は無料で、大人と一緒に入園できます。' } },
+  { c: 'fee', q: { zh: '只陪同、不採果的人也要收費嗎？', en: 'Do people who only come along, without picking, need to pay?', ja: '付き添いだけで収穫しない人も料金がかかりますか？' },
+    a: { zh: '因為每場次解說場地共用關係，入園採果就須收費，現場無等待區。', en: 'Yes. The briefing area is shared between sessions, so everyone who enters pays, and there\'s no waiting area on site.', ja: '解説スペースを各回で共用しているため、入園される方は全員料金がかかります。現地に待合スペースはありません。' } },
+  { c: 'fee', q: { zh: '只能付現金嗎？可以轉帳、刷卡或行動支付嗎？', en: 'Is it cash only? Can I pay by transfer, card or mobile?', ja: '現金のみですか？振込・カード・スマホ決済は使えますか？' },
+    a: { zh: '只接受現金交易。', en: 'Cash only.', ja: '現金のみのお取り扱いです。' } },
+  { c: 'fee', q: { zh: '採超過可帶回的重量怎麼算？現場可以加購嗎？', en: 'What if I pick more than my allowance? Can I buy extra?', ja: '持ち帰り分を超えて摘んだ場合は？追加購入できますか？' },
+    a: { zh: '超過重量以當天公告價格計算。', en: 'Extra weight is charged at the price posted on the day.', ja: '超過分は当日掲示の価格で計算します。' } },
+  { c: 'fee', q: { zh: '可以開收據或發票嗎？', en: 'Can you issue a receipt?', ja: '領収書は発行できますか？' },
+    a: { zh: '可以事先說明，可開農民收據。', en: 'Let us know in advance and we can issue a farmer\'s receipt.', ja: '事前にお知らせいただければ、農家の領収書を発行できます。' } },
+  { c: 'pick', q: { zh: '在果園裡可以邊採邊吃嗎？可以吃到飽嗎？', en: 'Can I eat while I pick? Is it all-you-can-eat?', ja: '摘みながら食べてもいいですか？食べ放題ですか？' },
+    a: { zh: '以不浪費為原則，可以邊採邊吃黑葉荔枝。', en: 'As long as nothing goes to waste, you\'re welcome to eat Black Leaf (黑葉) lychees as you pick.', ja: '無駄にしないことを前提に、黒葉（ヘイイエ）ライチは摘みながら召し上がれます。' } },
+  { c: 'pick', q: { zh: '袋子、剪刀由園方提供嗎？需要自備容器嗎？', en: 'Do you provide bags or scissors? Should I bring a container?', ja: '袋やハサミは用意されていますか？容器の持参は必要ですか？' },
+    a: { zh: '現場提供塑膠袋，不用其他工具。', en: 'Plastic bags are provided on site. You don\'t need any other tools.', ja: 'ビニール袋は現地でご用意しています。その他の道具は不要です。' } },
+  { c: 'pick', q: { zh: '每個時段大約多久？', en: 'How long is each session?', ja: '1 回の所要時間は？' },
+    a: { zh: '天氣炎熱，採果以 1 小時為主。', en: 'Because of the summer heat, picking lasts about an hour.', ja: '暑さのため、収穫は 1 時間程度です。' } },
+  { c: 'wx', q: { zh: '下雨還照常舉行嗎？', en: 'Does it go ahead in the rain?', ja: '雨の日も開催しますか？' },
+    a: { zh: '因為辦活動關係，現場都會有工作人員，有些人會選擇用自備雨具繼續活動，若不進園現場也有新鮮荔枝可以選購，看個人決定。', en: 'Staff are on site for every session. Some visitors carry on with their own rain gear; if you\'d rather not go into the orchard, fresh lychees are also on sale on site. It\'s up to you.', ja: '各回とも現地にスタッフがいます。雨具を持参して続ける方もいれば、入園せずに現地で新鮮なライチを購入される方もいます。ご自身でご判断ください。' } },
+  { c: 'wx', q: { zh: '颱風、豪雨或停班停課時怎麼辦？', en: 'What happens in a typhoon or heavy rain?', ja: '台風や大雨のときはどうなりますか？' },
+    a: { zh: '荔枝有成熟採收時間的限制，若遇颱風、豪雨可以自行向官方 LINE 取消。', en: 'Lychees can only be harvested in a short window when they\'re ripe. If there\'s a typhoon or heavy rain, you can cancel by messaging our official LINE.', ja: 'ライチは収穫できる時期が限られています。台風や大雨の場合は、公式 LINE から取り消しのご連絡をください。' } },
+  { c: 'site', q: { zh: '有廁所和洗手的地方嗎？', en: 'Are there toilets and somewhere to wash hands?', ja: 'トイレや手洗い場はありますか？' },
+    a: { zh: '現場是露天果園，無設廁所，最近公用廁所要步行 5 分鐘至古農莊文物館；現場有洗手台設備。', en: 'It\'s an open-air orchard with no toilets on site. The nearest public toilet is a 5-minute walk away at the Gu Nong Zhuang Heritage Museum. There is a hand-washing sink on site.', ja: '屋外の果樹園のため、現地にトイレはありません。最寄りの公衆トイレは徒歩 5 分の古農莊文物館にあります。手洗い場はあります。' } },
+  { c: 'site', q: { zh: '有休息區、遮陽的地方嗎？', en: 'Is there a shaded rest area?', ja: '日陰の休憩スペースはありますか？' },
+    a: { zh: '現場有解說區可遮陽，但因每場次解說場地共用關係，無法長時間提供休息。', en: 'The briefing area has shade, but it\'s shared between sessions, so it can\'t be used for a long rest.', ja: '解説スペースで日差しを避けられますが、各回で共用しているため、長時間の休憩にはご利用いただけません。' } },
+  { c: 'site', q: { zh: '嬰兒車、輪椅方便進出嗎？', en: 'Is the orchard accessible with a stroller or wheelchair?', ja: 'ベビーカーや車いすで入れますか？' },
+    a: { zh: '果園為碎石子泥土路，嬰兒車、輪椅推行較為辛苦，也會增加傾倒風險，請自行評估。', en: 'The paths are gravel and dirt, so pushing a stroller or wheelchair is hard work and there\'s a risk of tipping. Please judge what works for you.', ja: '園内は砂利と土の道のため、ベビーカーや車いすは押しにくく、転倒のおそれもあります。ご自身でご判断ください。' } },
+  { c: 'site', q: { zh: '可以帶寵物嗎？', en: 'Can I bring my pet?', ja: 'ペットを連れて行けますか？' },
+    a: { zh: '寵物請全程牽繩。', en: 'Pets must be on a leash at all times.', ja: 'ペットは常にリードをつけてください。' } },
+  { c: 'site', q: { zh: '可以帶外食、野餐嗎？園內可以抽菸嗎？', en: 'Can I bring food or have a picnic? Can I smoke?', ja: '飲食物の持ち込みやピクニック、喫煙はできますか？' },
+    a: { zh: '無外食野餐區提供；園區全區禁菸。', en: 'There\'s no picnic area for outside food, and the whole orchard is non-smoking.', ja: '持ち込み飲食・ピクニック用のスペースはありません。園内は全面禁煙です。' } }
+];
+
+/* ---------- 預覽資料（只在電腦上單獨打開時使用） ---------- */
+const MOCK = (() => {
+  const sess = [];
+  [['2027-06-05', [['09:00',40],['10:00',40],['11:00',40],['14:00',40],['15:00',40],['16:00',12]]],
+   ['2027-06-06', [['09:00',4],['10:00',0],['11:00',26]]],
+   ['2027-06-12', [['09:00',40],['10:00',40]]]].forEach(([d, list]) =>
+     list.forEach(([t, r]) => sess.push({ key: d + ' ' + t, date: d, time: t, note: '', remain: r, closed: false })));
+  const info = { '活動名稱': '2027農遊太平～荔枝採果趣', '主辦單位': '簡家荔枝園', '活動地點名稱': '簡家荔枝園',
+    '活動地點地圖連結': 'https://maps.app.goo.gl/', '官方LINE連結': 'https://line.me/', '官方LINE ID': '@420juyym',
+    '防詐騙提醒': '本活動只有現場現金繳費！如收到任何預先匯款通知，都是詐騙，請勿匯款。', '每筆報名人數上限': '',
+    '報名頁備註': '平日也可以報名參加，限 20 人團體報名，請加入官方 LINE 詢問。', baseUrl: location.pathname, pageImages: [] };
+  const tickets = [{ name: '成人', price: 200, counts: true, desc: '' }, { name: '兒童', price: 100, counts: true, desc: '3–12 歲' }];
+  const wait = (v, ms = 600) => new Promise(r => setTimeout(() => r(v), ms));
+  return {
+    // ?mock=sheet：模擬「已經貼好網頁內容／常見問題分頁」的情況，用來測試讀試算表的路徑
+    getPageData: () => {
+      const d = { info, tickets, avail: { status: '開放中', sessions: sess.map(s => ({ ...s })) } };
+      if (new URLSearchParams(location.search).get('mock') === 'sheet') {
+        d.content = { ...defaultContent(), '標語': { zh: '【試算表】標語', en: '[Sheet] tagline', ja: '' }, '交通_停車': { zh: '', en: '', ja: '' },
+          '評價_星等': { zh: '4.9', en: '', ja: '' }, '評價_評論數': { zh: '88', en: '', ja: '' }, '評價1_內容': { zh: '荔枝很甜（測試）', en: '', ja: '' }, '評價1_暱稱': { zh: '林○○', en: '', ja: '' } };
+        d.faq = [{ cat: '費用與付款', q: { zh: '【試算表】只有一題？', en: '[Sheet] one question?', ja: '' }, a: { zh: '是的', en: 'Yes', ja: '' } }];
+        d.info = { ...info, i18n: { '活動名稱': { en: '2027 Taiping Farm Trip: Lychee Picking', ja: '2027 農遊太平〜ライチ狩り体験' } } };
+      }
+      return wait(d);
+    },
+    getAvailability: () => wait({ status: '開放中', sessions: sess.map(s => ({ ...s })) }, 200),
+    getBooking: t => wait(t === 'demo' || t === 'demo-locked'
+      ? { found: true, id: '2027-0001', status: '有效', editable: true, canModify: t === 'demo', name: '王小明', phone: '0912345678', email: 'test@example.com', date: '2027-06-05', time: '09:00', key: '2027-06-05 09:00', need: 3, counts: { '成人': 2, '兒童': 1 } }
+      : { found: false }),
+    submitBooking: f => wait(okResult(f, '2027-0002'), 900),
+    updateBooking: (t, f) => wait(okResult(f, '2027-0001'), 900),
+    cancelBooking: () => wait({ ok: true, id: '2027-0001', dateText: '2027/6/5（六）', time: '09:00', email: 'test@example.com', mailOk: true }, 900)
+  };
+  function okResult(f, id) {
+    const s = sess.find(x => x.key === f.key);
+    const detail = tickets.filter(t => f.counts[t.name] > 0).map(t => t.name + ' ' + f.counts[t.name]).join('、');
+    const fee = tickets.reduce((n, t) => n + t.price * (f.counts[t.name] || 0), 0);
+    return { ok: true, id, dateText: s.date, time: s.time, detail, fee, email: f.email, mailOk: true, dupWarn: false };
+  }
+})();
+
+/* ---------- 頁面照片：預覽時讀同資料夾的 img/；放進 Apps Script 後改讀雲端資料夾（之後接上） ---------- */
+const IMG = { '主視覺': 'img/hero.jpg' };
+
+/* ---------- 共用小工具 ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const api = (fn, ...args) => {
+  if (IS_GAS) return new Promise((res, rej) => google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args));
+  if (!IS_API) return MOCK[fn](...args);
+  // 用 text/plain 送出，瀏覽器才不會先發一次「預檢」請求（Apps Script 不支援預檢）
+  return fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fn: fn, args: args }) })
+    .then(r => r.json())
+    .then(j => { if (j.error) throw new Error(j.error); return j.result; });
+};
+const params = () => new Promise(r => IS_GAS ? google.script.url.getLocation(l => r(l.parameter || {})) : r(Object.fromEntries(new URLSearchParams(location.search))));
+
+let LANG = 'zh';
+const t = (k, v) => { let s = (TXT[LANG] && TXT[LANG][k]) || TXT.zh[k] || k; if (v) Object.keys(v).forEach(x => s = s.split('{' + x + '}').join(v[x])); return s; };
+const L = obj => obj ? (obj[LANG] || obj.zh) : '';
+const tName = n => (TICKET_NAME[n] && TICKET_NAME[n][LANG]) || n;
+const tDesc = d => (TICKET_DESC[d] && TICKET_DESC[d][LANG]) || d;
+function fmtDay(ymd, withYear) {
+  const p = ymd.split('-').map(Number), d = new Date(p[0], p[1] - 1, p[2]), w = d.getDay();
+  if (LANG === 'en') return `${WEEK.en[w]}, ${MON_EN[p[1] - 1]} ${p[2]}${withYear ? ', ' + p[0] : ''}`;
+  return `${withYear ? p[0] + '/' : ''}${p[1]}/${p[2]}（${(LANG === 'ja' ? WEEK.ja : WEEK.zh)[w]}）`;
+}
+const detailText = c => D.tickets.filter(x => c[x.name] > 0).map(x => tName(x.name) + ' ' + c[x.name]).join(LANG === 'en' ? ', ' : '、');
+
+/* ---------- 狀態 ---------- */
+let D = null, P = {}, MODE = 'book', B = null, selDate = null, selKey = null, counts = {}, timer = null, cancelArmed = false;
+
+/* ---------- 啟動 ---------- */
+async function boot() {
+  P = await params();
+  let saved = null; try { saved = localStorage.getItem('lang'); } catch (e) {}
+  LANG = ['zh', 'en', 'ja'].includes(P.lang) ? P.lang : (['zh', 'en', 'ja'].includes(saved) ? saved : 'zh');
+  applyLang();
+  if (!IS_GAS && !IS_API) { document.body.classList.add('is-preview'); $('previewBar').style.display = ''; $('previewBar').textContent = '預覽模式：使用範例資料，不會真的報名。照片位置以虛線框表示。'; }
+  try {
+    D = await api('getPageData');
+    if (IS_API) D.info.baseUrl = location.origin + location.pathname;   // 「回到報名頁」回到這個網頁本身
+    D.tickets.forEach(x => counts[x.name] = 0);
+    if (P.t) {
+      const bk = await api('getBooking', P.t);
+      return initEdit(bk);
+    }
+    MODE = 'book';
+    show();
+  } catch (e) { $('loading').lastElementChild.textContent = t('loadFail') + (e && e.message || e); }
+}
+
+function show() {
+  renderAll();
+  $('loading').style.display = 'none'; $('app').style.display = '';
+  timer = setInterval(refresh, 30000);
+  observe();
+}
+
+/* ---------- 語言 ---------- */
+function applyLang() {
+  document.documentElement.lang = { zh: 'zh-Hant', en: 'en', ja: 'ja' }[LANG];
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.l === LANG));
+  document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
+  if (D) renderAll();
+}
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => {
+  LANG = b.dataset.l; try { localStorage.setItem('lang', LANG); } catch (e) {}
+  applyLang();
+});
+
+/* ---------- 畫面 ---------- */
+function renderAll() {
+  renderStatic();
+  if (MODE === 'done' || MODE === 'end') return;
+  renderBanner(); renderDates(); renderSlots(); renderTickets(); renderTotal();
+}
+
+/* ---------- 網頁內容：有「網頁內容」分頁就用試算表的，沒有就用上面的內建文字 ---------- */
+function defaultContent() {
+  const c = {}, set = (k, zh, en, ja) => c[k] = { zh: zh || '', en: en || '', ja: ja || '' };
+  ['orchard', 'tagline', 'introQuote', 'closing'].forEach(k => set({ orchard: '園區名稱', tagline: '標語', introQuote: '開場句', closing: '結語' }[k], TXT.zh[k], TXT.en[k], TXT.ja[k]));
+  set('主視覺小字', 'Taiping, Taichung · Three generations');
+  STORY.forEach((s, i) => { const n = i + 1;
+    set(`故事${n}_標籤`, s.gen, s.genEn, s.genJa); set(`故事${n}_標題`, s.zh.h, s.en.h, s.ja.h);
+    set(`故事${n}_內文`, s.zh.p.join('\n'), s.en.p.join('\n'), s.ja.p.join('\n')); set(`故事${n}_郵戳`, s.stamp); });
+  PATH.forEach((s, i) => { set(`入園${i + 1}_標題`, s.zh[0], s.en[0], s.ja[0]); set(`入園${i + 1}_說明`, s.zh[1], s.en[1], s.ja[1]); });
+  const tk = { tAddr: '交通_導航', tPark: '交通_停車', tBus: '交通_公車' };
+  TRAFFIC.forEach(x => set(tk[x.k], x.v.zh, x.v.en, x.v.ja));
+  return c;
+}
+let CONTENT = null;
+const CT = k => { const v = CONTENT[k]; return v ? (v[LANG] || v.zh || '') : ''; };     // 英日沒填就顯示中文
+const I = k => (D.info.i18n && D.info.i18n[k] && D.info.i18n[k][LANG]) || D.info[k] || '';  // 基本設定的英日欄
+const imgUrl = k => (IS_GAS || IS_API) ?(D.info.images && D.info.images[k] ? 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(D.info.images[k]) + '&sz=w1600' : '') : (IMG[k] || '');
+const photo = (k, label, cls) => { const u = imgUrl(k); return u ? '<div class="' + cls + ' ph has-img"><img src="' + esc(u) + '" alt="" loading="lazy"></div>' : '<div class="' + cls + ' ph" data-label="' + esc(label) + '"></div>'; };
+
+function renderStatic() {
+  const i = D.info;
+  if (!CONTENT) CONTENT = D.content && Object.keys(D.content).length ? D.content : defaultContent();
+  const orchard = CT('園區名稱') || t('orchard');
+  document.title = orchard + '｜' + I('活動名稱');
+  document.querySelector('.hero h1').textContent = orchard;
+  document.querySelector('.hero .tag').textContent = CT('標語');
+  document.querySelector('.hero .kicker').textContent = CT('主視覺小字');
+  document.querySelector('.intro-quote').textContent = CT('開場句');
+  document.querySelector('.closing').textContent = CT('結語');
+  $('eventName').textContent = I('活動名稱');
+  const hero = imgUrl('主視覺'); if (hero && $('heroImg').getAttribute('src') !== hero) $('heroImg').src = hero;
+
+  $('postcards').innerHTML = [1, 2, 3].filter(n => CT(`故事${n}_標題`)).map(n => `<article class="postcard reveal">
+      ${photo('明信片' + n, `照片：網頁_明信片${n}.jpg（直式 3:4）`, 'photo')}
+      <div class="text"><div class="gen">${esc(CT(`故事${n}_標籤`))}</div><h3>${esc(CT(`故事${n}_標題`))}</h3>
+        ${CT(`故事${n}_內文`).split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('')}
+        <div class="stamp">${esc(CT(`故事${n}_郵戳`))}</div></div></article>`).join('');
+  $('path').innerHTML = [1, 2, 3].filter(n => CT(`入園${n}_標題`)).map(n => `<div class="stop reveal"><div class="lbl">Stop ${n}</div>
+      <h3>${esc(CT(`入園${n}_標題`))}</h3>${photo('入園' + n, `照片：網頁_入園${n}.jpg（橫式）`, '')}<p>${esc(CT(`入園${n}_說明`))}</p></div>`).join('');
+
+  const dates = [...new Set(D.avail.sessions.map(s => s.date))].sort();
+  const prices = D.tickets.map(x => `${tName(x.name)} $${x.price}`).join(LANG === 'en' ? ' · ' : '・');
+  $('infoCards').innerHTML = [
+    [t('kDates'), dates.map(d => fmtDay(d)).join(LANG === 'en' ? ', ' : '、')],
+    [t('kFee'), prices],
+    [t('kPlace'), I('活動地點名稱')],
+    [t('kPay'), I('繳費方式') || t('payCash')]
+  ].map(([k, v]) => `<div class="icard"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join('');
+  const fraud = t('fraudPrefix') + I('防詐騙提醒');
+  $('fraudTop').textContent = fraud; $('cfFraud').textContent = fraud;
+
+  $('address').textContent = I('活動地點名稱');
+  $('navBtn').href = i['活動地點地圖連結'];
+  $('map').innerHTML = `<iframe loading="lazy" title="map" src="https://www.google.com/maps?q=${encodeURIComponent(i['活動地點名稱'] + ' 太平')}&output=embed"></iframe>`;
+  $('traffic').innerHTML = [['🔎', 'tAddr', '交通_導航'], ['🅿️', 'tPark', '交通_停車'], ['🚌', 'tBus', '交通_公車'], ['📍', 'tCheck', '交通_報到地點']]
+    .filter(([, , k]) => CT(k)).map(([ic, lk, k]) => `<div class="titem"><div class="ic">${ic}</div><div><b>${esc(t(lk))}</b><span>${esc(CT(k))}</span></div></div>`).join('');
+
+  // 評價：試算表有填星等或評論才顯示；預覽（沒有試算表）顯示待填框
+  const usingSheet = D.content && Object.keys(D.content).length;
+  const revs = [1, 2, 3].map(n => ({ text: CT(`評價${n}_內容`), who: CT(`評價${n}_暱稱`) })).filter(r => r.text);
+  const rating = CT('評價_星等'), rcount = CT('評價_評論數');
+  $('reviewsSec').style.display = usingSheet && !rating && !revs.length ? 'none' : '';
+  // 試算表會把 5.0 自動變成 5，這裡補回一位小數
+  $('ratingNum').textContent = rating ? (isFinite(Number(rating)) ? Number(rating).toFixed(1) : rating) : '–';
+  $('ratingCount').innerHTML = rcount ? esc(rcount + ' ' + t('reviewsCount')) : (usingSheet ? '' : '<span class="todo">待填：Google 星等與評論數</span>');
+  $('reviews').innerHTML = (revs.length ? revs : usingSheet ? [] : REVIEWS.items.map(r => ({ text: r.text, who: r.who, todo: true })))
+    .map(r => `<div class="review"><div class="stars" style="font-size:15px">★★★★★</div><div>${r.todo ? `<span class="todo">${esc(r.text)}</span>` : esc(r.text)}</div>${r.who ? `<div class="who">— ${esc(r.who)}</div>` : ''}</div>`).join('');
+  $('reviewsBtn').href = CT('評價_連結') || i['活動地點地圖連結'];
+
+  // 常見問題：試算表「常見問題」分頁（null = 沒有這個分頁 → 用內建題目）
+  const faq = D.faq || FAQ.map(f => ({ cat: FAQ_CATS[f.c].zh, q: f.q, a: f.a }));
+  const catName = zh => { const k = Object.keys(FAQ_CATS).find(x => FAQ_CATS[x].zh === zh); return k ? L(FAQ_CATS[k]) : zh; };
+  const cats = [...new Set(faq.map(f => f.cat))];
+  if (MODE === 'book') $('faqSec').style.display = faq.length ? '' : 'none';
+  const qa = list => list.map(f => `<details><summary>${esc(L(f.q))}</summary><p>${esc(L(f.a))}</p></details>`).join('');
+  $('faq').innerHTML = cats.map(c => {
+    const list = faq.filter(f => f.cat === c);
+    if (!c) return qa(list);   // 沒填分類的題目直接列出
+    return `<details class="faq-group"><summary>${esc(catName(c))}<span class="n">（${list.length}）</span></summary>` +
+           `<div class="faq-body">${qa(list)}</div></details>`;
+  }).join('');
+
+  $('foot').innerHTML = `${esc(I('主辦單位'))}<br>📍 <a href="${esc(i['活動地點地圖連結'])}" target="_blank" rel="noopener">${esc(t('map'))}</a>　💬 <a href="${esc(i['官方LINE連結'])}" target="_blank" rel="noopener">${esc(t('line'))} ${esc(i['官方LINE ID'])}</a>`;
+
+  if (!$('submit')) return;                     // 結束頁（報名成功、取消完成）沒有表單
+  if (I('報名頁備註') && MODE === 'book') {
+    $('notice').innerHTML = '📢 ' + esc(I('報名頁備註')) + (i['官方LINE連結'] ? `\n<a href="${esc(i['官方LINE連結'])}" target="_blank" rel="noopener" style="color:#06A34A;font-weight:700">👉 ${esc(t('line'))} ${esc(i['官方LINE ID'])}</a>` : '');
+    $('notice').style.display = '';
+  }
+  if (MODE === 'edit') $('formTitle').textContent = t('editTitle', { id: B.id });
+  $('submit').textContent = MODE === 'edit' ? t('saveEdit') : t('next');
+}
+
+const sess = key => D.avail.sessions.find(s => s.key === key);
+const need = () => D.tickets.reduce((n, x) => n + (x.counts ? counts[x.name] : 0), 0);
+const people = () => D.tickets.reduce((n, x) => n + counts[x.name], 0);
+const fee = () => D.tickets.reduce((n, x) => n + x.price * counts[x.name], 0);
+const showMsg = s => $('msg').textContent = s;
+
+function renderBanner() {
+  const st = D.avail.status;
+  $('banner').style.display = (B || st === '開放中') ? 'none' : '';
+  $('banner').textContent = st === '尚未開放' ? t('notOpen') : t('ended');
+  const cur = selKey && sess(selKey);
+  if (selKey && (!cur || cur.closed || cur.remain < Math.max(need(), 1))) { selKey = null; showMsg(t('slotChanged')); }
+}
+
+function renderDates() {
+  const by = {};
+  D.avail.sessions.forEach(s => { if (!(s.date in by)) by[s.date] = 0; if (!s.closed) by[s.date] += s.remain; });
+  $('dates').innerHTML = Object.keys(by).sort().map(d => {
+    const r = by[d];
+    return `<button class="opt ${d === selDate ? 'sel' : ''}" ${r > 0 ? '' : 'disabled'} data-date="${esc(d)}">${esc(fmtDay(d))}<small>${r > 0 ? esc(t('left', { n: r })) : esc(t('fullOrClosed'))}</small></button>`;
+  }).join('');
+}
+
+function renderSlots() {
+  if (!selDate) { $('slots').innerHTML = `<span class="desc">${esc(t('selectDateFirst'))}</span>`; return; }
+  const n = Math.max(need(), 1);
+  $('slots').innerHTML = D.avail.sessions.map((s, i) => {
+    if (s.date !== selDate) return '';
+    let sub, ok = false;
+    if (s.closed) sub = t('closed');
+    else if (s.remain === 0) sub = t('full');
+    else if (s.remain < n) sub = t('notEnough', { n: s.remain, m: n });
+    else { sub = t('left', { n: s.remain }); ok = true; }
+    return `<button class="opt ${ok && s.remain <= 5 ? 'few' : ''} ${s.key === selKey ? 'sel' : ''}" ${ok ? '' : 'disabled'} data-slot="${i}">${esc(s.time)}<small>${esc(sub)}</small>${s.note ? '<small>' + esc(s.note) + '</small>' : ''}</button>`;
+  }).join('');
+}
+
+function renderTickets() {
+  const max = Number(D.info['每筆報名人數上限']) || Infinity;
+  const cur = selKey ? sess(selKey) : null;
+  $('tickets').innerHTML = D.tickets.map((x, i) => {
+    const plusOk = people() < max && !(x.counts && cur && need() >= cur.remain);
+    return `<div class="tk"><div>${esc(tName(x.name))}　<b>$${x.price}</b>
+        <div class="desc">${esc(tDesc(x.desc))}${x.counts ? '' : esc(t('noSeat'))}</div></div>
+      <div class="stepper"><button data-chg="${i}" data-d="-1" ${counts[x.name] > 0 ? '' : 'disabled'} aria-label="−">−</button>
+        <span aria-live="polite">${counts[x.name]}</span>
+        <button data-chg="${i}" data-d="1" ${plusOk ? '' : 'disabled'} aria-label="+">＋</button></div></div>`;
+  }).join('') + (max < Infinity ? `<div class="desc" style="margin-top:6px">${esc(t('maxPer', { n: max }))}</div>` : '');
+}
+
+function renderTotal() {
+  const s = selKey ? sess(selKey) : null;
+  $('picked').textContent = s ? t('pickedTpl', { d: fmtDay(s.date), t: s.time }) : t('noSlot');
+  $('total').innerHTML = `${esc(detailText(counts) || t('noPeople'))}　${esc(t('totalTpl'))} <b>$${fee()}</b>`;
+  $('submit').disabled = !((B || D.avail.status === '開放中') && s && need() > 0);
+}
+
+/* ---------- 操作 ---------- */
+// 頁內連結（例如「立即報名」）：Apps Script 的網頁預設把連結開在最外層視窗，這裡改成在頁面內捲動
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const el = document.getElementById(a.getAttribute('href').slice(1));
+  if (el) { e.preventDefault(); el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
+});
+document.addEventListener('click', e => {
+  const d = e.target.closest('[data-date]'); if (d && !d.disabled) { selDate = d.dataset.date; selKey = null; showMsg(''); renderAll(); $('slots').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+  const s = e.target.closest('[data-slot]'); if (s && !s.disabled) { selKey = D.avail.sessions[+s.dataset.slot].key; showMsg(''); renderAll(); return; }
+  const c = e.target.closest('[data-chg]'); if (c && !c.disabled) { const x = D.tickets[+c.dataset.chg]; counts[x.name] = Math.max(0, counts[x.name] + Number(c.dataset.d)); renderAll(); }
+});
+
+function refresh() {
+  if (MODE !== 'book' && MODE !== 'edit') return;
+  api('getAvailability').then(a => { D.avail = adj(a); renderAll(); }).catch(() => {});
+}
+function adj(avail) { if (B) avail.sessions.forEach(s => { if (s.key === B.key && !s.closed) s.remain += B.need; }); return avail; }
+
+function form() { return { key: selKey, name: $('name').value, phone: $('phone').value, email: $('email').value, counts: counts, lang: LANG,
+                           hp: $('hp').value, el: Date.now() - T0 }; }   // hp、el：擋機器人用（見下方隱藏欄位）
+
+/* 前端先做簡單檢查，送出後後端還會再檢查一次 */
+function checkForm(f) {
+  if (!f.name.trim()) return { zh: '請填寫姓名', en: 'Enter your name', ja: 'お名前を入力してください' }[LANG];
+  if (!/^09\d{8}$/.test(f.phone.replace(/\D/g, ''))) return { zh: '手機號碼格式不正確（例：0912345678）', en: 'Enter a Taiwan mobile number, like 0912345678', ja: '携帯番号の形式が正しくありません（例：0912345678）' }[LANG];
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) return { zh: 'Email 格式不正確', en: 'Enter a valid email', ja: 'メールアドレスの形式が正しくありません' }[LANG];
+  return '';
+}
+
+$('submit').onclick = () => {
+  const f = form(), err = checkForm(f);
+  if (err) return showMsg(err);
+  showMsg('');
+  const s = sess(selKey);
+  const rows = [[t('cDate'), fmtDay(s.date, true)], [t('cTime'), s.time], [t('cPeople'), detailText(counts)], [t('cFee'), '$' + fee() + '（' + t('payCash') + '）'], [t('cName'), f.name], [t('cPhone'), f.phone], [t('cEmail'), f.email]];
+  $('cfTable').innerHTML = rows.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('');
+  $('confirm').classList.add('open');
+  $('cfGo').focus();
+};
+$('cfBack').onclick = () => $('confirm').classList.remove('open');
+$('confirm').addEventListener('click', e => { if (e.target === $('confirm')) $('confirm').classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('confirm').classList.remove('open'); });
+
+$('cfGo').onclick = () => {
+  const go = $('cfGo'); go.disabled = true; go.textContent = t('sending');
+  const f = form();
+  (B ? api('updateBooking', P.t, f) : api('submitBooking', f)).then(r => {
+    go.disabled = false; go.textContent = t('confirmSend'); $('confirm').classList.remove('open');
+    if (r.ok) return showDone(r);
+    if (r.refresh) refresh(); else renderAll();
+    showMsg(r.msg);
+  }).catch(e => { go.disabled = false; go.textContent = t('confirmSend'); $('confirm').classList.remove('open'); showMsg(t('netErr') + (e && e.message || e)); });
+};
+
+/* ---------- 結束頁（報名成功、取消完成…）：只留一張卡片 ---------- */
+function endPage(title, body) {
+  clearInterval(timer); MODE = 'end';
+  $('intro').style.display = 'none'; $('faqSec').style.display = 'none';
+  $('booking').innerHTML = `<div class="wrap"><div class="step" style="margin-top:40px"><h3 style="font-family:var(--serif);font-size:21px;color:var(--red)">${title}</h3>${body}</div>
+    <div class="fraud">${esc(t('fraudPrefix') + I('防詐騙提醒'))}</div></div>`;
+  $('loading').style.display = 'none'; $('app').style.display = '';
+  window.scrollTo(0, 0);
+}
+
+function showDone(r) {
+  endPage(esc(B ? t('editDoneTitle') : t('doneTitle')),
+    `<p>${esc(t('bookingNo'))}：<b style="font-size:20px">${esc(r.id)}</b></p>
+     <p>${esc(r.dateText)} ${esc(r.time)}<br>${esc(detailText(counts))}　${esc(t('totalTpl'))} <b style="color:var(--red)">$${r.fee}</b></p>
+     <p class="desc">${esc(r.mailOk ? t('mailSent', { e: r.email }) : t('mailLater'))}</p>
+     ${r.dupWarn ? `<p class="msg">${esc(t('dupWarn'))}</p>` : ''}
+     <p><b>${esc(t('screenshot'))}</b></p>`);
+}
+
+/* ---------- 修改／取消模式：略過入口，直接到表單 ---------- */
+function initEdit(bk) {
+  if (!bk.found || bk.status !== '有效' || !bk.editable) {
+    const why = !bk.found ? t('notFound') : bk.status !== '有效' ? t('alreadyCancelled', { id: bk.id }) : t('tooLate', { id: bk.id });
+    return endPage(esc(t('cannotEdit')), `<p>${esc(why)}</p><p><a href="${esc(D.info.baseUrl)}">${esc(t('backHome'))}</a></p>`);
+  }
+  B = bk;
+  if (P.a === 'cancel' || bk.canModify === false) return cancelOnly(bk);
+  MODE = 'edit';
+  D.avail = adj(D.avail);
+  selDate = bk.date; selKey = bk.key;
+  D.tickets.forEach(x => counts[x.name] = bk.counts[x.name] || 0);
+  $('name').value = bk.name; $('phone').value = bk.phone; $('email').value = bk.email;
+  $('intro').style.display = 'none'; $('faqSec').style.display = 'none'; $('notice').style.display = 'none';
+  $('cancelBox').style.display = '';
+  show();
+  $('booking').scrollIntoView();
+}
+
+function cancelOnly(bk) {
+  D.tickets.forEach(x => counts[x.name] = bk.counts[x.name] || 0);
+  endPage(esc(t('cancelTitle', { id: bk.id })),
+    `<p>${esc(fmtDay(bk.date, true))} ${esc(bk.time)}<br>${esc(detailText(counts))}</p>
+     ${bk.canModify === false ? `<p class="msg" style="color:#8A5A00">${esc(t('lockedNote'))}</p>` : ''}
+     <p class="desc">${esc(t('cancelWarn'))}${esc(t('cancelOnlyNote'))}</p>
+     <button id="cancelBtn" class="btn btn-ghost" style="width:100%;color:var(--danger);border-color:var(--danger)">${esc(t('cancelThis'))}</button>
+     <div id="msg" class="msg"></div>`);
+  $('cancelBtn').onclick = askCancel;
+}
+
+function askCancel() {
+  const btn = $('cancelBtn');
+  if (!cancelArmed) { cancelArmed = true; btn.textContent = t('cancelSure'); btn.style.background = 'var(--danger)'; btn.style.color = '#fff'; return; }
+  btn.disabled = true; btn.textContent = t('processing');
+  api('cancelBooking', P.t, LANG).then(r => {
+    if (!r.ok) { cancelArmed = false; btn.disabled = false; btn.textContent = t('cancelThis'); btn.style.background = ''; btn.style.color = 'var(--danger)'; return showMsg(r.msg); }
+    endPage(esc(t('cancelledTitle')),
+      `<p>${esc(t('cancelledBody', { id: r.id, d: r.dateText, t: r.time }))}</p>
+       <p class="desc">${esc(r.mailOk ? t('cancelMailSent', { e: r.email }) : t('cancelMailLater'))}</p>
+       <p><a href="${esc(D.info.baseUrl)}">${esc(t('rebook'))}</a></p>`);
+  }).catch(e => { cancelArmed = false; btn.disabled = false; btn.textContent = t('cancelThis'); showMsg(t('netErr') + (e && e.message || e)); });
+}
+$('cancelBtn').onclick = askCancel;
+
+/* ---------- 捲動效果：內容浮現＋主視覺慢速移動 ---------- */
+function observe() {
+  const els = document.querySelectorAll('.reveal:not(.in)');
+  if (!('IntersectionObserver' in window)) return els.forEach(el => el.classList.add('in'));
+  const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
+}
+const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (reduce || ticking) return; ticking = true;
+  requestAnimationFrame(() => { const y = window.scrollY; if (y < window.innerHeight) $('heroBg').style.transform = `translateY(${y * 0.3}px)`; ticking = false; });
+}, { passive: true });
+const _render = renderStatic;
+renderStatic = function () { _render(); requestAnimationFrame(observe); };
+
+boot();
+</script>
+</body>
+</html>
