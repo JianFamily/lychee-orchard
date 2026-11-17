@@ -185,11 +185,13 @@
   .stop p { color: var(--muted); font-size: 15px; margin: 10px 0 0; }
 
   /* 5. 活動資訊卡 */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .cards { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 560px) { .cards { grid-template-columns: 1fr 1fr; } }   /* 寬螢幕排成 2×2 */
   .icard { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
   .icard .k { font-size: 13px; color: var(--muted); }
-  .icard .v { font-family: var(--serif); font-size: 18px; margin-top: 2px; }
-  .icard .v small { display: block; font-family: var(--sans); font-size: 13px; color: var(--muted); }
+  .icard .v { font-family: var(--serif); font-size: 18px; margin-top: 2px; line-height: 1.6; }
+  .icard .v .ln { display: block; }
+  .icard .v small { display: block; font-family: var(--sans); font-size: 14px; color: var(--muted); margin-top: 2px; }
   .info-note { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--leaf); border-radius: 10px; padding: 14px 16px; margin-top: 12px; font-size: 15.5px; }
   .info-note p { margin: 0 0 8px; } .info-note p:last-child { margin: 0; }
   .fraud { background: #FFF4D6; border: 1.5px solid #E5B24A; color: #7A4B00; border-radius: 10px; padding: 12px 14px; font-size: 14.5px; margin-top: 14px; }
@@ -455,7 +457,7 @@ const TXT = {
     deckHint: '點一下明信片翻面；左右滑動或按箭頭看下一張', flipToBack: '翻面看故事', flipToFront: '翻回照片', deckPrev: '上一張明信片', deckNext: '下一張明信片',
     walkTitle: '走進果園', walkSub: '從入口到荔枝樹下，先帶你看看當天會走過的路。',
     infoTitle: '活動資訊', infoSub: '出發前，先看看這幾件事。',
-    kDates: '活動日期', kFee: '費用', kPlace: '地點', kPay: '繳費方式', payCash: '現場現金繳費',
+    kDates: '活動日期', kFee: '費用', kPlace: '地址', kPay: '繳費方式', payCash: '現場現金繳費',
     trafficTitle: '交通導覽', navigate: '用 Google 地圖導航',
     tAddr: '導航關鍵字', tPark: '停車', tBus: '大眾運輸', tCheck: '報到地點',
     reviewsTitle: '大家怎麼說', allReviews: '到 Google 地圖看全部評價', reviewsCount: '則 Google 評論',
@@ -489,7 +491,7 @@ const TXT = {
     deckHint: 'Tap the postcard to flip it. Swipe or use the arrows for the next one.', flipToBack: 'Flip for the story', flipToFront: 'Back to photo', deckPrev: 'Previous postcard', deckNext: 'Next postcard',
     walkTitle: 'Step into the orchard', walkSub: 'From the gate to the lychee trees: a look at the path you\'ll take on the day.',
     infoTitle: 'Event info', infoSub: 'A few things to know before you go.',
-    kDates: 'Dates', kFee: 'Fees', kPlace: 'Location', kPay: 'Payment', payCash: 'Cash on site',
+    kDates: 'Dates', kFee: 'Fees', kPlace: 'Address', kPay: 'Payment', payCash: 'Cash on site',
     trafficTitle: 'Getting here', navigate: 'Navigate with Google Maps',
     tAddr: 'Search keyword', tPark: 'Parking', tBus: 'Public transport', tCheck: 'Check-in point',
     reviewsTitle: 'What visitors say', allReviews: 'See all reviews on Google Maps', reviewsCount: 'Google reviews',
@@ -523,7 +525,7 @@ const TXT = {
     deckHint: 'タップで裏返し。左右にスワイプ、または矢印で次の一枚へ', flipToBack: '裏返して読む', flipToFront: '写真に戻る', deckPrev: '前の絵はがき', deckNext: '次の絵はがき',
     walkTitle: '果樹園を歩く', walkSub: '入口からライチの木の下まで、当日歩く道をご紹介します。',
     infoTitle: 'イベント情報', infoSub: 'お出かけ前にご確認ください。',
-    kDates: '開催日', kFee: '料金', kPlace: '場所', kPay: 'お支払い', payCash: '当日現金払い',
+    kDates: '開催日', kFee: '料金', kPlace: '所在地', kPay: 'お支払い', payCash: '当日現金払い',
     trafficTitle: 'アクセス', navigate: 'Google マップでナビ',
     tAddr: '検索キーワード', tPark: '駐車場', tBus: '公共交通機関', tCheck: '受付場所',
     reviewsTitle: 'お客様の声', allReviews: 'Google マップですべての口コミを見る', reviewsCount: '件の Google 口コミ',
@@ -793,6 +795,25 @@ const I = k => (D.info.i18n && D.info.i18n[k] && D.info.i18n[k][LANG]) || D.info
 const imgUrl = k => (IS_GAS || IS_API) ?(D.info.images && D.info.images[k] ? 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(D.info.images[k]) + '&sz=w1600' : '') : (IMG[k] || '');
 const photo = (k, label, cls) => { const u = imgUrl(k); return u ? '<div class="' + cls + ' ph has-img"><img src="' + esc(u) + '" alt="" loading="lazy"></div>' : '<div class="' + cls + ' ph" data-label="' + esc(label) + '"></div>'; };
 
+/* 活動日期排版：同一週的週六、週日放同一行；平日或【場次】「頁面備註」有寫字的日子（例如端午節）自己一行，並在後面加上備註 */
+const DAY_NOTE = { '端午節': { en: 'Dragon Boat Festival', ja: '端午節' }, '端午': { en: 'Dragon Boat Festival', ja: '端午節' } };
+function dateLines() {
+  const byDate = {};
+  D.avail.sessions.forEach(s => { if (!(s.date in byDate)) byDate[s.date] = ''; if (s.note && !byDate[s.date]) byDate[s.date] = String(s.note).trim(); });
+  const sep = LANG === 'en' ? ' · ' : '、', out = [];   // 英文日期本身有逗號，改用 · 分隔
+  let wk = null;                                   // 目前這一行是哪一週的週末
+  Object.keys(byDate).sort().forEach(ymd => {
+    const p = ymd.split('-').map(Number), d = new Date(p[0], p[1] - 1, p[2]), dow = d.getDay();
+    const note = byDate[ymd], noteL = note ? ((DAY_NOTE[note] && DAY_NOTE[note][LANG]) || note) : '';
+    if (noteL || (dow !== 0 && dow !== 6)) { out.push(fmtDay(ymd) + (noteL ? ' ' + noteL : '')); wk = null; return; }
+    const monday = new Date(d); monday.setDate(d.getDate() - ((dow + 6) % 7));
+    const key = monday.toDateString();
+    if (wk && wk.key === key) wk.days.push(fmtDay(ymd));
+    else { wk = { key: key, days: [fmtDay(ymd)] }; out.push(wk); }
+  });
+  return out.map(x => typeof x === 'string' ? x : x.days.join(sep));
+}
+
 function renderStatic() {
   const i = D.info;
   if (!CONTENT) CONTENT = D.content && Object.keys(D.content).length ? D.content : defaultContent();
@@ -825,14 +846,15 @@ function renderStatic() {
   $('path').innerHTML = [1, 2, 3].filter(n => CT(`入園${n}_標題`)).map(n => `<div class="stop reveal"><div class="lbl">Stop ${n}</div>
       <h3>${esc(CT(`入園${n}_標題`))}</h3>${photo('入園' + n, `照片：網頁_入園${n}.jpg（橫式）`, '')}<p>${esc(CT(`入園${n}_說明`))}</p></div>`).join('');
 
-  const dates = [...new Set(D.avail.sessions.map(s => s.date))].sort();
-  const prices = D.tickets.map(x => `${tName(x.name)} $${x.price}`).join(LANG === 'en' ? ' · ' : '・');
+  // 每一格可以有好幾行：[標籤, [第 1 行, 第 2 行…], 小字行的索引]
+  const addr = CT('活動資訊_地址');
   $('infoCards').innerHTML = [
-    [t('kDates'), dates.map(d => fmtDay(d)).join(LANG === 'en' ? ', ' : '、')],
-    [t('kFee'), prices],
-    [t('kPlace'), I('活動地點名稱')],
-    [t('kPay'), I('繳費方式') || t('payCash')]
-  ].map(([k, v]) => `<div class="icard"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join('');
+    [t('kDates'), dateLines(), -1],
+    [t('kFee'), D.tickets.map(x => `${tName(x.name)} $${x.price}`), -1],
+    [t('kPlace'), [I('活動地點名稱')].concat(addr ? [addr] : []), 1],
+    [t('kPay'), [I('繳費方式') || t('payCash')], -1]
+  ].map(([k, lines, small]) => `<div class="icard"><div class="k">${esc(k)}</div><div class="v">${
+      lines.map((l, n) => n === small ? `<small>${esc(l)}</small>` : `<span class="ln">${esc(l)}</span>`).join('')}</div></div>`).join('');
   // 活動資訊的補充說明：【網頁內容】的「活動資訊_說明」有填才顯示（一行一段）
   const note = CT('活動資訊_說明').split(/\n+/).map(x => x.trim()).filter(Boolean);
   $('infoNote').style.display = note.length ? '' : 'none';
@@ -840,7 +862,7 @@ function renderStatic() {
   const fraud = t('fraudPrefix') + I('防詐騙提醒');
   $('fraudTop').textContent = fraud; $('cfFraud').textContent = fraud;
 
-  $('address').textContent = I('活動地點名稱');
+  $('address').textContent = I('活動地點名稱') + (addr ? (LANG === 'en' ? ', ' : '　') + addr : '');
   $('navBtn').href = i['活動地點地圖連結'];
   $('map').innerHTML = `<iframe loading="lazy" title="map" src="https://www.google.com/maps?q=${encodeURIComponent(i['活動地點名稱'] + ' 太平')}&output=embed"></iframe>`;
   $('traffic').innerHTML = [['🔎', 'tAddr', '交通_導航'], ['🅿️', 'tPark', '交通_停車'], ['🚌', 'tBus', '交通_公車'], ['📍', 'tCheck', '交通_報到地點']]
