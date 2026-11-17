@@ -619,11 +619,14 @@ async function boot() {
   applyLang();
   if (!IS_GAS && !IS_API) { document.body.classList.add('is-preview'); $('previewBar').style.display = ''; $('previewBar').textContent = '預覽模式：使用範例資料，不會真的報名。照片位置以虛線框表示。'; }
   try {
+    // 從信件連結進來（有 t）時，頁面資料和這筆報名同時去要，不用等完一個再等一個
+    const bkReq = P.t ? api('getBooking', P.t) : null;
+    if (bkReq) bkReq.catch(() => {});
     D = await api('getPageData');
     if (IS_API) D.info.baseUrl = location.origin + location.pathname;   // 「回到報名頁」回到這個網頁本身
     D.tickets.forEach(x => counts[x.name] = 0);
-    if (P.t) {
-      const bk = await api('getBooking', P.t);
+    if (bkReq) {
+      const bk = await bkReq;
       return initEdit(bk);
     }
     MODE = 'book';
