@@ -76,8 +76,8 @@
   .deck .postcard[data-pos="0"] { z-index: 3; }
   .deck .postcard[data-pos="1"] { z-index: 2; transform: translate(9px, 10px) rotate(2.2deg) scale(.985); }
   .deck .postcard[data-pos="2"] { z-index: 1; transform: translate(-8px, 19px) rotate(-2.6deg) scale(.97); }
-  .deck .postcard:not([data-pos="0"]) .pc > * { opacity: 0; transition: opacity .3s ease; }   /* 後面兩張只露出紙邊和斜紋，不露出內容 */
-  .deck .postcard[data-pos="0"] .pc > * { opacity: 1; transition: opacity .45s ease .12s; }
+  .deck .postcard:not([data-pos="0"]) .face > * { opacity: 0; transition: opacity .3s ease; }   /* 後面兩張只露出紙邊和斜紋，不露出內容 */
+  .deck .postcard[data-pos="0"] .face > * { opacity: 1; transition: opacity .45s ease .12s; }
   .deck .postcard.fly-l { transform: translateX(-118%) rotate(-11deg); opacity: 0; }
   .deck .postcard.fly-r { transform: translateX(118%) rotate(11deg); opacity: 0; }
   .deck .postcard.no-anim { transition: none; }
@@ -86,16 +86,21 @@
   .deck-nav button.arrow:hover { background: var(--red); color: #fff; }
   .deck-nav .count { font-family: var(--type); color: var(--muted); font-size: 15px; min-width: 56px; text-align: center; }
   .deck-hint { text-align: center; color: var(--muted); font-size: 13px; margin: 0 0 22px; }
-  @media (prefers-reduced-motion: reduce) { .deck .postcard, .deck .postcard > * { transition: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .deck .postcard, .deck .postcard *, .postcard .flip { transition: none !important; } }
 
   /* 仿舊航空明信片：泛黃紙＋污漬＋紅藍斜紋邊＋磨損邊緣＋郵票郵戳＋橡皮章 */
   :root {
     --old-paper: #EFDFC0; --ink-blue: #2E4A86; --ink-red: #A5392A; --ink-brown: #5A3A22;
     --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42  0 0 0 0 .28  0 0 0 0 .12  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
-  .postcard { filter: drop-shadow(0 10px 18px rgba(62,42,28,.22)) drop-shadow(0 2px 3px rgba(62,42,28,.18)); }
-  .postcard .pc {
-    display: grid; grid-template-columns: 1fr; padding: 10px; position: relative;
+  /* 每張明信片固定 4:3，有正反兩面：正面是照片，背面是文字；點一下翻面 */
+  .postcard { aspect-ratio: 4 / 3; filter: drop-shadow(0 10px 18px rgba(62,42,28,.22)) drop-shadow(0 2px 3px rgba(62,42,28,.18)); }
+  .postcard .persp { height: 100%; perspective: 1500px; }
+  .postcard .flip { position: relative; height: 100%; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.3,.7,.2,1); }
+  .postcard.flipped .flip { transform: rotateY(180deg); }
+  .postcard .face.back { transform: rotateY(180deg); }
+  .postcard .face {
+    position: absolute; inset: 0; display: grid; padding: 10px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
     /* 紅藍航空斜紋（褪色） */
     background:
       var(--noise),
@@ -105,15 +110,25 @@
     clip-path: polygon(0.8% 1.4%, 14% 0.3%, 33% 1%, 55% 0, 78% 0.9%, 95.5% 0.2%, 97.2% 2.4%, 100% 3.6%, 99.4% 22%, 100% 47%, 99.3% 71%, 100% 92%, 98.6% 99.2%, 81% 100%, 58% 99.3%, 36% 100%, 17% 99.1%, 2.2% 100%, 0.3% 97.6%, 0.9% 76%, 0 52%, 0.7% 28%, 0 8%);
   }
   /* 整張卡片疊一層紙張雜點和邊緣變黃，讓照片和斜紋也有舊舊的感覺 */
-  .postcard .pc::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; mix-blend-mode: multiply;
+  .postcard .face::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; mix-blend-mode: multiply;
     background:
       radial-gradient(ellipse at 50% 50%, transparent 58%, rgba(120,72,24,.28) 100%),
       radial-gradient(circle at 88% 82%, rgba(140,90,35,.16) 0 7%, transparent 13%),
       radial-gradient(circle at 6% 12%, rgba(140,90,35,.14) 0 5%, transparent 10%),
       linear-gradient(97deg, transparent 49.6%, rgba(110,70,25,.10) 50%, transparent 50.6%); }
-  .postcard .photo { aspect-ratio: 4 / 3; max-height: 36vh; position: relative; }
+  .postcard .front-in { position: relative; display: grid; min-height: 0; }
+  .postcard .photo { position: relative; min-height: 0; }
   .postcard .photo img { filter: sepia(.22) saturate(.88) contrast(.96); }
-  .postcard .text { padding: 22px 20px 18px; display: flex; flex-direction: column; position: relative; color: var(--ink-brown);
+  /* 正面左下角的紙標籤（第幾代＋標題）和右下角的「翻面」提示 */
+  .postcard .tag-paper { position: absolute; left: 10px; bottom: 10px; max-width: 68%; z-index: 1; background: var(--old-paper); color: var(--ink); padding: 5px 10px 6px;
+    box-shadow: 0 1px 3px rgba(60,40,20,.35); transform: rotate(-1.5deg); font-family: var(--serif); font-size: 15px; line-height: 1.35; }
+  .postcard .tag-paper small { display: block; font-family: var(--type); color: var(--ink-red); font-size: 12px; }
+  .postcard .turn { position: absolute; right: 10px; bottom: 10px; z-index: 1; background: rgba(46,32,22,.72); color: #fff; border-radius: 999px; padding: 4px 11px; font-size: 12.5px; }
+  .postcard .back .turn { position: static; background: none; color: var(--ink-red); padding: 0; font-family: var(--sans); white-space: nowrap; }
+  .postcard .rubber.dark { left: auto; right: 12px; top: 12px; bottom: auto; }
+  /* 背面：字的大小由程式自動縮放（--fs），確保整段文字塞得進 4:3 的卡片 */
+  .postcard .text { --fs: 15.5px; font-size: var(--fs); line-height: 1.6; min-height: 0; overflow: hidden;
+    padding: 16px 16px 12px; display: flex; flex-direction: column; position: relative; color: var(--ink-brown);
     background:
       var(--noise),
       radial-gradient(ellipse at 20% 0%, rgba(255,250,235,.55), transparent 55%),
@@ -128,25 +143,34 @@
     font-family: var(--type); font-size: 7.5px; line-height: 1.1; padding: 2px; background: rgba(255,255,255,.25); }
   .postcard .stampx svg { width: 30px; height: 30px; display: block; margin: 0 auto; }
   .postcard .cancel { position: absolute; top: 18px; right: 24px; width: 108px; height: 70px; overflow: visible; color: var(--ink-blue); opacity: .78; mix-blend-mode: multiply; }
-  .postcard .gen { font-family: var(--type); color: var(--ink-red); font-size: 14px; }
-  .postcard h3 { font-family: var(--serif); font-size: 21px; margin: 4px 0 10px; padding-right: 108px; color: var(--ink); }
-  .postcard p { margin: 0 0 12px; font-size: 15.5px; }
-  .postcard .foot { margin-top: auto; padding-top: 12px; border-top: 1px dashed rgba(90,58,34,.3); display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
-  .postcard .stamp { font-family: var(--type); font-size: 12.5px; color: rgba(90,58,34,.75); white-space: pre-line; line-height: 1.6; }
+  .postcard .gen { font-family: var(--type); color: var(--ink-red); font-size: .9em; padding-right: 112px; }
+  .postcard h3 { font-family: var(--serif); font-size: 1.3em; line-height: 1.35; margin: .15em 0 .45em; padding-right: 112px; color: var(--ink); }
+  .postcard p { margin: 0 0 .5em; font-size: 1em; }
+  .postcard .foot { margin-top: auto; padding-top: 6px; border-top: 1px dashed rgba(90,58,34,.3); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .postcard .stamp { font-family: var(--type); font-size: .78em; color: rgba(90,58,34,.75); white-space: pre-line; line-height: 1.45; }
+  .postcard .text.tight .stamp { display: none; }      /* 字太多時，先把下方的英文郵戳字收掉 */
+  .postcard .text.tight .foot { border-top: 0; padding-top: 0; }
+  .postcard .text.tighter h3, .postcard .text.tighter .foot { display: none; }   /* 還是太多：標題（正面已有）和下方那列也收掉 */
+  .postcard .text.tighter .gen { margin-bottom: .5em; }
   /* 橡皮章字樣 */
   .rubber { filter: url(#inkRough); font-family: var(--type); letter-spacing: .06em; font-size: 15px; padding: 2px 9px; border: 2px solid currentColor; border-radius: 3px;
     white-space: nowrap; mix-blend-mode: multiply; opacity: .72; flex: none; }
   .rubber.red { color: var(--ink-red); transform: rotate(-7deg); }
   .rubber.dark { color: #2D2620; position: absolute; left: 14px; bottom: 14px; transform: rotate(-9deg); background: rgba(239,223,192,.55); z-index: 1; font-size: 13px; }
-  @media (max-width: 639px) {   /* 手機：郵票郵戳跨在照片和文字交界，不壓到標題 */
-    .postcard .post { top: -58px; right: 4px; }
-    .postcard h3 { padding-right: 0; }
-    .postcard .gen { padding-right: 64px; }
+  @media (max-width: 639px) {   /* 手機：郵票郵戳縮小一點，留更多位置給文字 */
+    .deck { padding: 6px 2px 26px; }
+    .postcard .face { padding: 8px; }
+    .postcard .text { padding: 12px 13px 9px; line-height: 1.5; }
+    .postcard .post { top: 6px; right: 6px; transform: scale(.72); transform-origin: 100% 0; }
+    .postcard .gen, .postcard h3 { padding-right: 86px; }
+    .postcard .text.tighter p:first-of-type::before { content: ""; float: right; width: 84px; height: 44px; }   /* 第一段繞過郵票 */
+    .rubber.red { font-size: 12px; }
   }
   @media (min-width: 640px) {
-    .postcard .pc { grid-template-columns: 1fr 1fr; padding: 12px; }
-    .postcard .photo { aspect-ratio: auto; min-height: 430px; max-height: none; }
-    .postcard .text { padding: 30px 26px 22px; }
+    .postcard .face { padding: 12px; }
+    .postcard .text { --fs: 18px; padding: 30px 30px 20px; }
+    .postcard .tag-paper { font-size: 18px; left: 16px; bottom: 16px; }
+    .postcard .turn { right: 16px; bottom: 16px; font-size: 14px; }
   }
   .closing { font-family: var(--serif); text-align: center; font-size: 18px; color: var(--leaf-dark); margin: 8px auto 0; max-width: 520px; }
 
@@ -428,7 +452,7 @@ const TXT = {
     loading: '正在走進果園…', orchard: '簡家荔枝園', tagline: '一顆荔枝，三代人的傳承', bookNow: '立即報名', scrollCue: '往下走進果園',
     introQuote: '一顆荔枝，承載三代人的心血；\n一座果園，延續著家的故事。',
     closing: '歡迎來到簡家荔枝園，和我們一起品嚐這份跨越三代的甜蜜！',
-    deckHint: '點一下明信片，或左右滑動，看下一張', deckPrev: '上一張明信片', deckNext: '下一張明信片',
+    deckHint: '點一下明信片翻面；左右滑動或按箭頭看下一張', flipToBack: '翻面看故事', flipToFront: '翻回照片', deckPrev: '上一張明信片', deckNext: '下一張明信片',
     walkTitle: '走進果園', walkSub: '從入口到荔枝樹下，先帶你看看當天會走過的路。',
     infoTitle: '活動資訊', infoSub: '出發前，先看看這幾件事。',
     kDates: '活動日期', kFee: '費用', kPlace: '地點', kPay: '繳費方式', payCash: '現場現金繳費',
@@ -462,7 +486,7 @@ const TXT = {
     loading: 'Walking into the orchard…', orchard: 'Jian Family Lychee Orchard', tagline: 'One lychee, three generations', bookNow: 'Book now', scrollCue: 'Scroll to step inside',
     introQuote: 'One lychee carries the work of three generations;\none orchard carries a family\'s story.',
     closing: 'Welcome to the Jian Family Lychee Orchard — come taste a sweetness three generations in the making.',
-    deckHint: 'Tap the postcard or swipe to see the next one', deckPrev: 'Previous postcard', deckNext: 'Next postcard',
+    deckHint: 'Tap the postcard to flip it. Swipe or use the arrows for the next one.', flipToBack: 'Flip for the story', flipToFront: 'Back to photo', deckPrev: 'Previous postcard', deckNext: 'Next postcard',
     walkTitle: 'Step into the orchard', walkSub: 'From the gate to the lychee trees: a look at the path you\'ll take on the day.',
     infoTitle: 'Event info', infoSub: 'A few things to know before you go.',
     kDates: 'Dates', kFee: 'Fees', kPlace: 'Location', kPay: 'Payment', payCash: 'Cash on site',
@@ -496,7 +520,7 @@ const TXT = {
     loading: '果樹園へご案内中…', orchard: '簡家ライチ園', tagline: '一粒のライチに、三代の想い', bookNow: '予約する', scrollCue: 'スクロールして園内へ',
     introQuote: '一粒のライチに三代の想いを、\nひとつの果樹園に家族の物語を。',
     closing: '簡家ライチ園へようこそ。三代にわたる甘さを、一緒に味わいましょう。',
-    deckHint: '絵はがきをタップ、または左右にスワイプで次へ', deckPrev: '前の絵はがき', deckNext: '次の絵はがき',
+    deckHint: 'タップで裏返し。左右にスワイプ、または矢印で次の一枚へ', flipToBack: '裏返して読む', flipToFront: '写真に戻る', deckPrev: '前の絵はがき', deckNext: '次の絵はがき',
     walkTitle: '果樹園を歩く', walkSub: '入口からライチの木の下まで、当日歩く道をご紹介します。',
     infoTitle: 'イベント情報', infoSub: 'お出かけ前にご確認ください。',
     kDates: '開催日', kFee: '料金', kPlace: '場所', kPay: 'お支払い', payCash: '当日現金払い',
@@ -784,12 +808,18 @@ function renderStatic() {
 
   const cards = [1, 2, 3].filter(n => CT(`故事${n}_標題`));
   deckN = cards.length; if (deckCur >= deckN) deckCur = 0;
-  $('postcards').innerHTML = cards.map((n, idx) => `<article class="postcard" data-pos="${(idx - deckCur + deckN) % deckN}"><div class="pc">
-      <div class="photo-wrap" style="position:relative;display:grid">${photo('明信片' + n, `照片：網頁_明信片${n}.jpg（主角放中間）`, 'photo')}<span class="rubber dark" aria-hidden="true">PAR AVION</span></div>
-      <div class="text">${postMarks(n)}
+  $('postcards').innerHTML = cards.map((n, idx) => { const pos = (idx - deckCur + deckN) % deckN; return `
+    <article class="postcard${pos === 0 && deckFlip ? ' flipped' : ''}" data-pos="${pos}"><div class="persp"><div class="flip">
+      <div class="face front"><div class="front-in">
+        ${photo('明信片' + n, `照片：網頁_明信片${n}.jpg（橫式 4:3）`, 'photo')}
+        <span class="rubber dark" aria-hidden="true">PAR AVION</span>
+        <div class="tag-paper"><small>${esc(CT(`故事${n}_標籤`))}</small>${esc(CT(`故事${n}_標題`))}</div>
+        <span class="turn">↻ ${esc(t('flipToBack'))}</span></div></div>
+      <div class="face back"><div class="text">${postMarks(n)}
         <div class="gen">${esc(CT(`故事${n}_標籤`))}</div><h3>${esc(CT(`故事${n}_標題`))}</h3>
         ${CT(`故事${n}_內文`).split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('')}
-        <div class="foot"><div class="stamp">${esc(CT(`故事${n}_郵戳`))}</div><span class="rubber red" aria-hidden="true">POST CARD</span></div></div></div></article>`).join('');
+        <div class="foot"><div class="stamp">${esc(CT(`故事${n}_郵戳`))}</div><span class="turn">↻ ${esc(t('flipToFront'))}</span><span class="rubber red" aria-hidden="true">POST CARD</span></div></div></div>
+    </div></div></article>`; }).join('');
   $('deckPrev').setAttribute('aria-label', t('deckPrev')); $('deckNext').setAttribute('aria-label', t('deckNext'));
   deckLayout();
   $('path').innerHTML = [1, 2, 3].filter(n => CT(`入園${n}_標題`)).map(n => `<div class="stop reveal"><div class="lbl">Stop ${n}</div>
@@ -1049,18 +1079,47 @@ function postMarks(n) {
 }
 
 /* ---------- 明信片疊：一次看一張，翻到下一張 ---------- */
-let deckCur = 0, deckN = 0, deckBusy = false;
+let deckCur = 0, deckN = 0, deckBusy = false, deckFlip = false;   // deckFlip：最上面那張現在是不是翻到背面
 function deckLayout() {
   const cards = [...$('postcards').children];
   cards.forEach((c, i) => {
     const p = (i - deckCur + deckN) % deckN;
     c.dataset.pos = p; c.setAttribute('aria-hidden', p ? 'true' : 'false');
+    c.classList.toggle('flipped', p === 0 && deckFlip);
   });
   $('deckCount').textContent = deckN ? (deckCur + 1) + ' / ' + deckN : '';
   $('deckNav').style.display = $('deckHint').style.display = deckN > 1 ? '' : 'none';
 }
+function deckFlipTop() { if (deckBusy || !deckN) return; deckFlip = !deckFlip; deckLayout(); }
+/* 背面文字自動縮放：字從預設大小一路縮到塞得進卡片；縮到最小還塞不下，就先收掉下方的英文郵戳字再試一次 */
+function fitBacks() {
+  document.querySelectorAll('#postcards .text').forEach(el => {
+    if (!el.clientHeight) return;
+    el.classList.remove('tight'); el.style.removeProperty('--fs');
+    const start = parseFloat(getComputedStyle(el).fontSize) || 15.5, min = 10.5, good = 13;
+    // 三種排法：0 全部顯示；1 收掉下方英文郵戳字；2 再收掉標題和下方那一列（標題正面已經有了）
+    const tiers = [[], ['tight'], ['tight', 'tighter']];
+    const tryTier = cls => {
+      el.classList.remove('tight', 'tighter'); cls.forEach(c => el.classList.add(c));
+      let fs = start; el.style.setProperty('--fs', fs + 'px');
+      while (el.scrollHeight > el.clientHeight + 1 && fs > min) { fs -= .5; el.style.setProperty('--fs', fs + 'px'); }
+      return fs;
+    };
+    let best = -1, bestFs = 0;
+    for (let i = 0; i < tiers.length; i++) {
+      const fs = tryTier(tiers[i]);
+      if (fs > bestFs) { best = i; bestFs = fs; }
+      if (fs >= good) break;                       // 字夠大就用這個排法，不再往下收
+    }
+    tryTier(tiers[best]);
+  });
+}
+window.addEventListener('resize', () => requestAnimationFrame(fitBacks));
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => requestAnimationFrame(fitBacks));
+
 function deckGo(dir) {
   if (deckBusy || deckN < 2) return;
+  deckFlip = false;                                 // 換下一張時，一律從正面（照片）開始
   const cards = [...$('postcards').children];
   const still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (still) { deckCur = (deckCur + dir + deckN) % deckN; return deckLayout(); }
@@ -1090,8 +1149,11 @@ $('deckNext').onclick = () => deckGo(1);
     if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { moved = true; deckGo(dx < 0 ? 1 : -1); }
   });
   deck.addEventListener('pointercancel', () => x0 = null);
-  deck.addEventListener('click', e => { if (moved) { moved = false; return; } if (String(getSelection && getSelection()) === '') deckGo(1); });
-  deck.addEventListener('keydown', e => { if (e.key === 'ArrowRight') deckGo(1); else if (e.key === 'ArrowLeft') deckGo(-1); });
+  deck.addEventListener('click', e => { if (moved) { moved = false; return; } if (String(getSelection && getSelection()) === '') deckFlipTop(); });
+  deck.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') deckGo(1); else if (e.key === 'ArrowLeft') deckGo(-1);
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); deckFlipTop(); }
+  });
 })();
 
 /* ---------- 捲動效果：內容浮現＋主視覺慢速移動 ---------- */
@@ -1108,7 +1170,7 @@ window.addEventListener('scroll', () => {
   requestAnimationFrame(() => { const y = window.scrollY; if (y < window.innerHeight) $('heroBg').style.transform = `translateY(${y * 0.3}px)`; ticking = false; });
 }, { passive: true });
 const _render = renderStatic;
-renderStatic = function () { _render(); requestAnimationFrame(observe); };
+renderStatic = function () { _render(); requestAnimationFrame(() => { observe(); fitBacks(); }); };
 
 boot();
 </script>
