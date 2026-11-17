@@ -69,9 +69,33 @@
   .intro-quote { font-family: var(--serif); font-size: 20px; line-height: 1.8; text-align: center; margin: 0 auto; max-width: 560px; }
 
   /* 3. 明信片 */
+  /* 三張明信片疊成一疊，一次只看最上面那張；點一下、左右滑、按箭頭都可以翻到下一張 */
+  .deck { display: grid; position: relative; padding: 6px 14px 26px; touch-action: pan-y; outline: none; }
+  .deck .postcard { grid-area: 1 / 1; margin: 0; cursor: pointer; transform-origin: 50% 100%; will-change: transform;
+    transition: transform .55s cubic-bezier(.2,.8,.2,1), opacity .4s ease, box-shadow .4s ease; }
+  .deck .postcard[data-pos="0"] { z-index: 3; }
+  .deck .postcard[data-pos="1"] { z-index: 2; transform: translate(9px, 10px) rotate(2.2deg) scale(.985); box-shadow: 0 6px 16px rgba(62,42,28,.10); }
+  .deck .postcard[data-pos="2"] { z-index: 1; transform: translate(-8px, 19px) rotate(-2.6deg) scale(.97); box-shadow: 0 4px 12px rgba(62,42,28,.08); }
+  .deck .postcard:not([data-pos="0"]) > * { opacity: 0; transition: opacity .3s ease; }   /* 後面兩張只露出紙邊，不露出內容 */
+  .deck .postcard[data-pos="0"] > * { opacity: 1; transition: opacity .45s ease .12s; }
+  .deck .postcard.fly-l { transform: translateX(-118%) rotate(-11deg); opacity: 0; }
+  .deck .postcard.fly-r { transform: translateX(118%) rotate(11deg); opacity: 0; }
+  .deck .postcard.no-anim { transition: none; }
+  .deck-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 0 6px; }
+  .deck-nav button.arrow { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--red); background: var(--paper); color: var(--red); font-size: 20px; line-height: 1; cursor: pointer; }
+  .deck-nav button.arrow:hover { background: var(--red); color: #fff; }
+  .deck-nav .count { font-family: var(--type); color: var(--muted); font-size: 15px; min-width: 56px; text-align: center; }
+  .deck-hint { text-align: center; color: var(--muted); font-size: 13px; margin: 0 0 22px; }
+  @media (prefers-reduced-motion: reduce) { .deck .postcard, .deck .postcard > * { transition: none !important; } }
+
   .postcard { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 10px 28px rgba(62,42,28,.12); display: grid; grid-template-columns: 1fr; margin: 0 0 40px; }
-  .postcard .photo { aspect-ratio: 3 / 4; max-height: 70vh; }
-  .postcard .text { padding: 22px 20px 20px; display: flex; flex-direction: column; }
+  .postcard .photo { aspect-ratio: 4 / 3; max-height: 36vh; }
+  .postcard .text { padding: 22px 20px 20px; display: flex; flex-direction: column; position: relative; }
+  /* 右上角的郵戳 */
+  .postcard .pm { position: absolute; top: 14px; right: 14px; width: 74px; height: 74px; border-radius: 50%; border: 1.5px solid var(--red); outline: 1.5px solid var(--red); outline-offset: -7px;
+    display: grid; place-items: center; text-align: center; font-family: var(--type); font-size: 9.5px; line-height: 1.25; color: var(--red); opacity: .5; transform: rotate(-12deg); pointer-events: none; }
+  .postcard .pm b { display: block; font-size: 17px; font-weight: 400; }
+  .postcard h3 { padding-right: 78px; }
   .postcard .gen { font-family: var(--type); color: var(--red); font-size: 14px; }
   .postcard h3 { font-family: var(--serif); font-size: 21px; margin: 4px 0 10px; }
   .postcard p { margin: 0 0 12px; font-size: 15.5px; }
@@ -79,7 +103,6 @@
   @media (min-width: 640px) {
     .postcard { grid-template-columns: 1fr 1fr; }
     .postcard .photo { aspect-ratio: auto; min-height: 420px; max-height: none; }
-    .postcard:nth-of-type(even) .photo { order: 2; }
     .postcard .text { padding: 32px 28px 24px; }
   }
   .closing { font-family: var(--serif); text-align: center; font-size: 18px; color: var(--leaf-dark); margin: 8px auto 0; max-width: 520px; }
@@ -100,6 +123,8 @@
   .icard .k { font-size: 13px; color: var(--muted); }
   .icard .v { font-family: var(--serif); font-size: 18px; margin-top: 2px; }
   .icard .v small { display: block; font-family: var(--sans); font-size: 13px; color: var(--muted); }
+  .info-note { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--leaf); border-radius: 10px; padding: 14px 16px; margin-top: 12px; font-size: 15.5px; }
+  .info-note p { margin: 0 0 8px; } .info-note p:last-child { margin: 0; }
   .fraud { background: #FFF4D6; border: 1.5px solid #E5B24A; color: #7A4B00; border-radius: 10px; padding: 12px 14px; font-size: 14.5px; margin-top: 14px; }
 
   /* 6. 交通 */
@@ -222,8 +247,16 @@
       <div class="wrap reveal"><p class="intro-quote" data-t="introQuote"></p></div>
     </section>
 
-    <section style="padding-top:0">
-      <div class="wrap" id="postcards"></div>
+    <section style="padding-top:0;overflow-x:hidden;overflow-x:clip">
+      <div class="wrap reveal">
+        <div class="deck" id="postcards" tabindex="0" role="group" aria-roledescription="carousel"></div>
+        <div class="deck-nav" id="deckNav">
+          <button class="arrow" id="deckPrev" type="button">‹</button>
+          <span class="count" id="deckCount" aria-live="polite"></span>
+          <button class="arrow" id="deckNext" type="button">›</button>
+        </div>
+        <p class="deck-hint" id="deckHint" data-t="deckHint"></p>
+      </div>
       <div class="wrap reveal"><p class="closing" data-t="closing"></p></div>
     </section>
 
@@ -240,6 +273,7 @@
         <h2 class="sec reveal" data-t="infoTitle"></h2>
         <p class="sec-sub reveal" data-t="infoSub"></p>
         <div class="cards reveal" id="infoCards"></div>
+        <div class="info-note reveal" id="infoNote" style="display:none"></div>
         <div class="fraud reveal" id="fraudTop"></div>
       </div>
     </section>
@@ -341,6 +375,7 @@ const TXT = {
     loading: '正在走進果園…', orchard: '簡家荔枝園', tagline: '一顆荔枝，三代人的傳承', bookNow: '立即報名', scrollCue: '往下走進果園',
     introQuote: '一顆荔枝，承載三代人的心血；\n一座果園，延續著家的故事。',
     closing: '歡迎來到簡家荔枝園，和我們一起品嚐這份跨越三代的甜蜜！',
+    deckHint: '點一下明信片，或左右滑動，看下一張', deckPrev: '上一張明信片', deckNext: '下一張明信片',
     walkTitle: '走進果園', walkSub: '從入口到荔枝樹下，先帶你看看當天會走過的路。',
     infoTitle: '活動資訊', infoSub: '出發前，先看看這幾件事。',
     kDates: '活動日期', kFee: '費用', kPlace: '地點', kPay: '繳費方式', payCash: '現場現金繳費',
@@ -374,6 +409,7 @@ const TXT = {
     loading: 'Walking into the orchard…', orchard: 'Jian Family Lychee Orchard', tagline: 'One lychee, three generations', bookNow: 'Book now', scrollCue: 'Scroll to step inside',
     introQuote: 'One lychee carries the work of three generations;\none orchard carries a family\'s story.',
     closing: 'Welcome to the Jian Family Lychee Orchard — come taste a sweetness three generations in the making.',
+    deckHint: 'Tap the postcard or swipe to see the next one', deckPrev: 'Previous postcard', deckNext: 'Next postcard',
     walkTitle: 'Step into the orchard', walkSub: 'From the gate to the lychee trees: a look at the path you\'ll take on the day.',
     infoTitle: 'Event info', infoSub: 'A few things to know before you go.',
     kDates: 'Dates', kFee: 'Fees', kPlace: 'Location', kPay: 'Payment', payCash: 'Cash on site',
@@ -407,6 +443,7 @@ const TXT = {
     loading: '果樹園へご案内中…', orchard: '簡家ライチ園', tagline: '一粒のライチに、三代の想い', bookNow: '予約する', scrollCue: 'スクロールして園内へ',
     introQuote: '一粒のライチに三代の想いを、\nひとつの果樹園に家族の物語を。',
     closing: '簡家ライチ園へようこそ。三代にわたる甘さを、一緒に味わいましょう。',
+    deckHint: '絵はがきをタップ、または左右にスワイプで次へ', deckPrev: '前の絵はがき', deckNext: '次の絵はがき',
     walkTitle: '果樹園を歩く', walkSub: '入口からライチの木の下まで、当日歩く道をご紹介します。',
     infoTitle: 'イベント情報', infoSub: 'お出かけ前にご確認ください。',
     kDates: '開催日', kFee: '料金', kPlace: '場所', kPay: 'お支払い', payCash: '当日現金払い',
@@ -465,7 +502,7 @@ const STORY = [
 const PATH = [
   { lbl: 'Stop 1', photo: '照片：果園入口（橫式）', zh: ['果園入口', '在這裡報到、領取採果袋，聽園主說明採果方式。'], en: ['The gate', 'Check in here, pick up your bag and hear how to pick from the grower.'], ja: ['果樹園の入口', 'ここで受付をして袋を受け取り、園主から摘み方の説明を聞きます。'] },
   { lbl: 'Stop 2', photo: '照片：果樹小徑（橫式）', zh: ['果樹小徑', '沿著樹蔭小路往裡走，兩旁都是結實纍纍的荔枝樹。'], en: ['The orchard path', 'Follow the shady path between rows of laden lychee trees.'], ja: ['果樹の小道', '木陰の小道を進むと、両側に実をつけたライチの木が並びます。'] },
-  { lbl: 'Stop 3', photo: '照片：荔枝特寫（橫式）', zh: ['荔枝樹下', '挑一串紅透的荔枝，親手剪下屬於你的那一串甜。'], en: ['Under the lychee trees', 'Find a ripe red bunch and snip your own sweet harvest.'], ja: ['ライチの木の下で', '真っ赤に熟した房を選んで、自分の手で摘み取りましょう。'] }
+  { lbl: 'Stop 3', photo: '照片：荔枝特寫（橫式）', zh: ['荔枝樹下', '挑一串紅透的荔枝，親手摘下屬於你的那一串甜。'], en: ['Under the lychee trees', 'Find a ripe red bunch and pick your own sweet harvest by hand.'], ja: ['ライチの木の下で', '真っ赤に熟した房を選んで、自分の手で摘み取りましょう。'] }
 ];
 
 /* ---------- 交通／評價／常見問題（之後改從試算表讀，三語） ---------- */
@@ -692,11 +729,16 @@ function renderStatic() {
   $('eventName').textContent = I('活動名稱');
   const hero = imgUrl('主視覺'); if (hero && $('heroImg').getAttribute('src') !== hero) $('heroImg').src = hero;
 
-  $('postcards').innerHTML = [1, 2, 3].filter(n => CT(`故事${n}_標題`)).map(n => `<article class="postcard reveal">
-      ${photo('明信片' + n, `照片：網頁_明信片${n}.jpg（直式 3:4）`, 'photo')}
-      <div class="text"><div class="gen">${esc(CT(`故事${n}_標籤`))}</div><h3>${esc(CT(`故事${n}_標題`))}</h3>
+  const cards = [1, 2, 3].filter(n => CT(`故事${n}_標題`));
+  deckN = cards.length; if (deckCur >= deckN) deckCur = 0;
+  $('postcards').innerHTML = cards.map((n, idx) => `<article class="postcard" data-pos="${(idx - deckCur + deckN) % deckN}">
+      ${photo('明信片' + n, `照片：網頁_明信片${n}.jpg（主角放中間）`, 'photo')}
+      <div class="text"><div class="pm" aria-hidden="true"><span>TAIPING<b>0${n}</b>TAICHUNG</span></div>
+        <div class="gen">${esc(CT(`故事${n}_標籤`))}</div><h3>${esc(CT(`故事${n}_標題`))}</h3>
         ${CT(`故事${n}_內文`).split(/\n+/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('')}
         <div class="stamp">${esc(CT(`故事${n}_郵戳`))}</div></div></article>`).join('');
+  $('deckPrev').setAttribute('aria-label', t('deckPrev')); $('deckNext').setAttribute('aria-label', t('deckNext'));
+  deckLayout();
   $('path').innerHTML = [1, 2, 3].filter(n => CT(`入園${n}_標題`)).map(n => `<div class="stop reveal"><div class="lbl">Stop ${n}</div>
       <h3>${esc(CT(`入園${n}_標題`))}</h3>${photo('入園' + n, `照片：網頁_入園${n}.jpg（橫式）`, '')}<p>${esc(CT(`入園${n}_說明`))}</p></div>`).join('');
 
@@ -708,6 +750,10 @@ function renderStatic() {
     [t('kPlace'), I('活動地點名稱')],
     [t('kPay'), I('繳費方式') || t('payCash')]
   ].map(([k, v]) => `<div class="icard"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join('');
+  // 活動資訊的補充說明：【網頁內容】的「活動資訊_說明」有填才顯示（一行一段）
+  const note = CT('活動資訊_說明').split(/\n+/).map(x => x.trim()).filter(Boolean);
+  $('infoNote').style.display = note.length ? '' : 'none';
+  $('infoNote').innerHTML = note.map(p => `<p>${esc(p)}</p>`).join('');
   const fraud = t('fraudPrefix') + I('防詐騙提醒');
   $('fraudTop').textContent = fraud; $('cfFraud').textContent = fraud;
 
@@ -928,6 +974,52 @@ function askCancel() {
   }).catch(e => { cancelArmed = false; btn.disabled = false; btn.textContent = t('cancelThis'); showMsg(t('netErr') + (e && e.message || e)); });
 }
 $('cancelBtn').onclick = askCancel;
+
+/* ---------- 明信片疊：一次看一張，翻到下一張 ---------- */
+let deckCur = 0, deckN = 0, deckBusy = false;
+function deckLayout() {
+  const cards = [...$('postcards').children];
+  cards.forEach((c, i) => {
+    const p = (i - deckCur + deckN) % deckN;
+    c.dataset.pos = p; c.setAttribute('aria-hidden', p ? 'true' : 'false');
+  });
+  $('deckCount').textContent = deckN ? (deckCur + 1) + ' / ' + deckN : '';
+  $('deckNav').style.display = $('deckHint').style.display = deckN > 1 ? '' : 'none';
+}
+function deckGo(dir) {
+  if (deckBusy || deckN < 2) return;
+  const cards = [...$('postcards').children];
+  const still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (still) { deckCur = (deckCur + dir + deckN) % deckN; return deckLayout(); }
+  deckBusy = true;
+  if (dir > 0) {                                   // 下一張：最上面那張往左飛走，再收到最底下
+    const top = cards[deckCur];
+    top.classList.add('fly-l');
+    setTimeout(() => { deckCur = (deckCur + 1) % deckN; deckLayout(); top.classList.remove('fly-l'); setTimeout(() => deckBusy = false, 250); }, 300);
+  } else {                                         // 上一張：最底下那張從右邊飛回最上面
+    deckCur = (deckCur - 1 + deckN) % deckN;
+    const back = cards[deckCur];
+    back.classList.add('no-anim', 'fly-r'); back.dataset.pos = 0;
+    void back.offsetWidth;                         // 讓瀏覽器先把起點位置算好，動畫才會出現
+    back.classList.remove('no-anim', 'fly-r');
+    deckLayout();
+    setTimeout(() => deckBusy = false, 450);
+  }
+}
+$('deckPrev').onclick = () => deckGo(-1);
+$('deckNext').onclick = () => deckGo(1);
+(() => {
+  const deck = $('postcards'); let x0 = null, y0 = 0, moved = false;
+  deck.addEventListener('pointerdown', e => { x0 = e.clientX; y0 = e.clientY; moved = false; });
+  deck.addEventListener('pointerup', e => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { moved = true; deckGo(dx < 0 ? 1 : -1); }
+  });
+  deck.addEventListener('pointercancel', () => x0 = null);
+  deck.addEventListener('click', e => { if (moved) { moved = false; return; } if (String(getSelection && getSelection()) === '') deckGo(1); });
+  deck.addEventListener('keydown', e => { if (e.key === 'ArrowRight') deckGo(1); else if (e.key === 'ArrowLeft') deckGo(-1); });
+})();
 
 /* ---------- 捲動效果：內容浮現＋主視覺慢速移動 ---------- */
 function observe() {
